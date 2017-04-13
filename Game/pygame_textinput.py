@@ -3,7 +3,7 @@ import pygame.locals as pl
 
 pygame.font.init()
 
-#STEFAN
+
 enter = False
 
 class TextInput:
@@ -151,10 +151,10 @@ class TextInput:
 
     def set_cursor_color(self, color):
         self.cursor_surface.fill(color)
-    #STEFAN
+
     def the_input(self):
         player = self.input_string
         return player
-    #STEFAN
+
     def __str__(self):
         return self.input_string

@@ -205,7 +205,7 @@ def the_gamefunction():
     screen = pygame.display.set_mode((display_width1 , display_height1))
     pygame.display.update()
 
-    the_image = "D:/HR Projecten/Project Pygame_working_version!/ProjectPygame/Game/the_final_map.png"
+    the_image = "the_final_map.png"
     screen_image = pygame.display.set_mode((display_width1, display_height1), pygame.FULLSCREEN)
     menu_image =  pygame.image.load(the_image)
     screen_image.blit(menu_image,(0,0))
@@ -541,11 +541,6 @@ def the_gamefunction():
 
 
         elif posx > playerhead_title.beginX and posx < playerhead_title.endX and posy > playerhead_title.beginY and posy < playerhead_title.endY: pass
-
-
-
-
-
 
 
 
@@ -2378,15 +2373,9 @@ def the_gamefunction():
                 print(MouseX, MouseY)
                 print ("Mouse Button up")
 
-
-
-
-
             elif events.type == pygame.MOUSEBUTTONUP:
                 print(MouseX, MouseY)
                 print ("Mouse Button down")
-
-
 
             elif events.type == pygame.MOUSEMOTION:
                 print ("mouse at " + " " + str(MouseX) +  " " + str(MouseY))
@@ -3412,9 +3401,6 @@ def the_highscoresfunction():
     screen4.blit(rank1_myfont3, (10, 200))
     screen4.blit(rank1_myfont4, (10, 260))
     screen4.blit(rank1_myfont5, (10, 320))
-
-
-
 
     ''''Mouse'''
     (MouseX, MouseY) = pygame.mouse.get_pos()
