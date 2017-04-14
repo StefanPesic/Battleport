@@ -2569,11 +2569,9 @@ def the_playersfunction():
     menu_image2 = pygame.image.load(the_image2)
     screen_image2.blit(menu_image2, (0, 0))
 
-    ''''The images (human and AI)'''
+    ''''The images (human)'''
     menu_image3 = pygame.image.load("human.jpg")
     menu_image3 = pygame.transform.scale(menu_image3, (display_width // 6, display_height // 4))
-    menu_image4 = pygame.image.load("AI.jpg")
-    menu_image4 = pygame.transform.scale(menu_image4, (display_width // 5, display_height // 4))
     menu_image5 = pygame.image.load("black.jpeg")
     menu_image5 = pygame.transform.scale(menu_image5, (display_width // 3, display_height // 6))
 
@@ -2582,25 +2580,20 @@ def the_playersfunction():
     my_font = pygame.font.Font(None, 50)
     players_font = my_font.render("Players", 1, white)
     two_players_font = my_font.render("2 players", 1, white)
-    ai_font = my_font.render("AI", 1, white)
     back2_myfont = my_font.render("Back", 1, red)
     playerpick_font = my_font.render("2 players", 1, white)
-    aipick_font = my_font.render("AI", 1, white)
 
     # imports the letters
     screen2.blit(players_font, (260, 10))
     screen2.blit(two_players_font, (180, 100))
-    screen2.blit(ai_font, (390, 100))
     screen2.blit(back2_myfont, (270, 410))
 
     ''''Title positions'''
-    players_title = title_position(180, 340, 100, 270)
-    ai_title = title_position(340, 470, 100, 270)
+    players_title = title_position(220, 340, 100, 270)
     players_back_title = title_position(270, 360, 405, 450)
 
+    ''''The function for the players selection'''
     def the_players_click(posx, posy):
-        playerclick = False
-        AIclick = False
         if posx > players_title.beginX and posx < players_title.endX and posy > players_title.beginY and posy < players_title.endY:
             the_players_title = figure(screen_image2, red, black, 175, 90, 160, 185, 1)
 
@@ -2610,29 +2603,6 @@ def the_playersfunction():
             if events.type == pygame.MOUSEBUTTONDOWN and events.button == 1:
                 effect1.play()
                 the_startfunction()
-
-                playerlick = True
-                AIclick = False
-                if AIclick == False:
-                    screen2.blit(menu_image5, (display_width * 0.35, display_height * 0.65))
-                    screen2.blit(playerpick_font, (260, 350))
-
-        elif posx > ai_title.beginX and posx < ai_title.endX and posy > ai_title.beginY and posy < ai_title.endY:
-            the_ai_title = figure(screen_image2, red, black, 330, 90, 140, 185, 1)
-
-
-            screen2.blit(menu_image5, (display_width * 0.35, display_height * 0.65))
-            screen2.blit(aipick_font, (300, 350))
-            print("AI")
-            if events.type == pygame.MOUSEBUTTONDOWN and events.button == 1:
-                effect1.play()
-                AIclick = True
-                playerlick = False
-                if playerclick == False:
-                    screen2.blit(menu_image5, (display_width * 0.35, display_height * 0.65))
-                    screen2.blit(aipick_font, (300, 350))
-
-
         elif posx > players_back_title.beginX and posx < players_back_title.endX and posy > players_back_title.beginY and posy < players_back_title.endY:
             the_back1_title = figure(screen_image2, red, black, 260, 400, 100, 50, 1)
             print("Back")
@@ -2661,7 +2631,6 @@ def the_playersfunction():
                 print("mouse at " + " " + str(MouseX) + " " + str(MouseY))
 
             screen2.blit(menu_image3, (display_width * 0.30, display_height * 0.30))
-            screen2.blit(menu_image4, (display_width * 0.53, display_height * 0.30))
             the_players_click(MouseX, MouseY)
             (MouseX, MouseY) = pygame.mouse.get_pos()
 
@@ -3709,8 +3678,6 @@ def the_video():
     menu111_font = my_font1.render("Press space to start the game", 1, red)
     count = 0
 
-
-
     pygame.init()
     clock = pygame.time.Clock()
     movie = pygame.movie.Movie('the_war.mpg')
@@ -3759,4 +3726,4 @@ def the_video():
 
     pygame.quit()
 
-the_video()
+the_video() #video function gets loaded as first function.

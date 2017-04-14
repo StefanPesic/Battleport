@@ -13,11 +13,11 @@
     <SUITE FILE_PATH="coverage/Game$card_recursion_test.coverage" NAME="card recursion test Coverage Results" MODIFIED="1485460934685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Game$card_recursion_test_2.coverage" NAME="card recursion test 2 Coverage Results" MODIFIED="1485464090436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Game$database_test.coverage" NAME="database test Coverage Results" MODIFIED="1485903168186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Game$functions.coverage" NAME="functions Coverage Results" MODIFIED="1485918791084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Game$functions.coverage" NAME="functions Coverage Results" MODIFIED="1492159109801" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Game$Database.coverage" NAME="Database Coverage Results" MODIFIED="1485897173935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Game$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1485887919710" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Game$map__2_.coverage" NAME="map (2) Coverage Results" MODIFIED="1485887443211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="G:/Project Pygame_working_version!/ProjectPygame/Game" />
-    <SUITE FILE_PATH="coverage/Game$TheMenu.coverage" NAME="TheMenu Coverage Results" MODIFIED="1492064093224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Game$TheMenu.coverage" NAME="TheMenu Coverage Results" MODIFIED="1492160128565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Game$stefan_Code.coverage" NAME="stefan Code Coverage Results" MODIFIED="1485607928920" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Game$class_test.coverage" NAME="class test Coverage Results" MODIFIED="1485453573135" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Game$TEST1.coverage" NAME="TEST1 Coverage Results" MODIFIED="1485888216874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -69,8 +69,8 @@
       <file leaf-file-name="functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+            <state relative-caret-position="102">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -81,7 +81,7 @@
       <file leaf-file-name="pygame_textinput.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pygame_textinput.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
+            <state relative-caret-position="2431">
               <caret line="157" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -93,24 +93,24 @@
       <file leaf-file-name="TheMenu.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TheMenu.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="598">
-              <caret line="3701" column="0" lean-forward="true" selection-start-line="3701" selection-start-column="0" selection-end-line="3701" selection-end-column="0" />
+            <state relative-caret-position="1088">
+              <caret line="3728" column="58" lean-forward="false" selection-start-line="3728" selection-start-column="58" selection-end-line="3728" selection-end-column="58" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-                <marker date="1492063972407" expanded="true" signature="71745:71802" ph="Insert into battleport_highscores... " />
-                <marker date="1492063972407" expanded="true" signature="71893:71950" ph="Insert into battleport_highscores... " />
-                <marker date="1492063972407" expanded="true" signature="72284:72341" ph="Insert into battleport_highscores... " />
-                <marker date="1492063972407" expanded="true" signature="72432:72489" ph="Insert into battleport_highscores... " />
-                <marker date="1492063972407" expanded="true" signature="157320:157372" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="157419:157471" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="157519:157571" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="157619:157671" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="157719:157771" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="157819:157871" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="157919:157971" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="158019:158071" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="158119:158171" ph="SELECT * FRO... battleport_highscores" />
-                <marker date="1492063972407" expanded="true" signature="158219:158272" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="71745:71802" ph="Insert into battleport_highscores... " />
+                <marker date="1492160210479" expanded="true" signature="71893:71950" ph="Insert into battleport_highscores... " />
+                <marker date="1492160210479" expanded="true" signature="72284:72341" ph="Insert into battleport_highscores... " />
+                <marker date="1492160210479" expanded="true" signature="72432:72489" ph="Insert into battleport_highscores... " />
+                <marker date="1492160210479" expanded="true" signature="155915:155967" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156014:156066" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156114:156166" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156214:156266" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156314:156366" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156414:156466" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156514:156566" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156614:156666" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156714:156766" ph="SELECT * FRO... battleport_highscores" />
+                <marker date="1492160210479" expanded="true" signature="156814:156867" ph="SELECT * FRO... battleport_highscores" />
               </folding>
             </state>
           </provider>
@@ -127,8 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>boat1bol</find>
-      <find>effect10</find>
       <find>effect</find>
       <find>drivers</find>
       <find>import driver</find>
@@ -157,6 +155,8 @@
       <find>scroll</find>
       <find>video</find>
       <find>the_final</find>
+      <find>AI</find>
+      <find>AIclick</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -621,12 +621,12 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12917738" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22260669" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2732274" sideWeight="0.49592668" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22260669" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27689487" sideWeight="0.49592668" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31362468" sideWeight="0.5040733" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39888424" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -704,41 +704,11 @@
     <entry file="file://$PROJECT_DIR$/function testing.py" />
     <entry file="file://$PROJECT_DIR$/card recursion test 2.py" />
     <entry file="file://$PROJECT_DIR$/methods.py" />
-    <entry file="file://$PROJECT_DIR$/Settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/HighScores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/players.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Start.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Settings.py" />
+    <entry file="file://$PROJECT_DIR$/HighScores.py" />
+    <entry file="file://$PROJECT_DIR$/Rules.py" />
+    <entry file="file://$PROJECT_DIR$/players.py" />
+    <entry file="file://$PROJECT_DIR$/Start.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -748,75 +718,33 @@
     </entry>
     <entry file="file://$USER_HOME$/Desktop/GAME BACKUP/map.py" />
     <entry file="file://G:/Project Pygame_working_version!/ProjectPygame/Game/map.py" />
-    <entry file="file://$PROJECT_DIR$/Test2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="15" lean-forward="true" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TEST1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="15" lean-forward="false" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Test2.py" />
+    <entry file="file://$PROJECT_DIR$/TEST1.py" />
     <entry file="file://$PROJECT_DIR$/map.py" />
     <entry file="file://$PROJECT_DIR$/all globals.py" />
-    <entry file="file://$PROJECT_DIR$/1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/1.py" />
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python36/site-packages/pyttsx/engine.py" />
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python36/site-packages/pyttsx/__init__.py" />
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python36/site-packages/pyttsx/driver.py" />
-    <entry file="file://$PROJECT_DIR$/Database1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-17">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="31" lean-forward="false" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/video test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Database1.py" />
+    <entry file="file://$PROJECT_DIR$/Database.py" />
+    <entry file="file://$PROJECT_DIR$/database test.py" />
+    <entry file="file://$PROJECT_DIR$/video test.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/3ad7a774-d07e-41bc-9d27-c794943c3938/console.sql" />
-    <entry file="file://$PROJECT_DIR$/functions.py">
+    <entry file="file://$PROJECT_DIR$/pygame_textinput.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+        <state relative-caret-position="2431">
+          <caret line="157" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pygame_textinput.py">
+    <entry file="file://$PROJECT_DIR$/functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="157" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
+        <state relative-caret-position="102">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -825,24 +753,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TheMenu.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="3701" column="0" lean-forward="true" selection-start-line="3701" selection-start-column="0" selection-end-line="3701" selection-end-column="0" />
+        <state relative-caret-position="1088">
+          <caret line="3728" column="58" lean-forward="false" selection-start-line="3728" selection-start-column="58" selection-end-line="3728" selection-end-column="58" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <marker date="1492063972407" expanded="true" signature="71745:71802" ph="Insert into battleport_highscores... " />
-            <marker date="1492063972407" expanded="true" signature="71893:71950" ph="Insert into battleport_highscores... " />
-            <marker date="1492063972407" expanded="true" signature="72284:72341" ph="Insert into battleport_highscores... " />
-            <marker date="1492063972407" expanded="true" signature="72432:72489" ph="Insert into battleport_highscores... " />
-            <marker date="1492063972407" expanded="true" signature="157320:157372" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="157419:157471" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="157519:157571" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="157619:157671" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="157719:157771" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="157819:157871" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="157919:157971" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="158019:158071" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="158119:158171" ph="SELECT * FRO... battleport_highscores" />
-            <marker date="1492063972407" expanded="true" signature="158219:158272" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="71745:71802" ph="Insert into battleport_highscores... " />
+            <marker date="1492160210479" expanded="true" signature="71893:71950" ph="Insert into battleport_highscores... " />
+            <marker date="1492160210479" expanded="true" signature="72284:72341" ph="Insert into battleport_highscores... " />
+            <marker date="1492160210479" expanded="true" signature="72432:72489" ph="Insert into battleport_highscores... " />
+            <marker date="1492160210479" expanded="true" signature="155915:155967" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156014:156066" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156114:156166" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156214:156266" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156314:156366" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156414:156466" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156514:156566" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156614:156666" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156714:156766" ph="SELECT * FRO... battleport_highscores" />
+            <marker date="1492160210479" expanded="true" signature="156814:156867" ph="SELECT * FRO... battleport_highscores" />
           </folding>
         </state>
       </provider>
