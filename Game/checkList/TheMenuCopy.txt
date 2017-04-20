@@ -1,87 +1,4 @@
-from functions import *
-import pygame_textinput
-from pygame_textinput import *
-import psycopg2
 
-
-''''Database login'''
-connection = psycopg2.connect(host= "localhost", database="postgres", user= "postgres", password="WallSpeaker5" )
-connection.autocommit = True
-cur = connection.cursor()
-
-
-
-''''ALL VARIABLES USED AS GLOBALS'''
-the_player_1 = ""
-the_player_2 = ""
-
-
-
-''''This decides which player is turn'''
-player1 = True
-
-''''Card grab'''
-the_player1_grab = True
-the_player2_grab = True
-
-specialboat1grab = 1
-specialboat2grab = 1
-specialboat3grab = 1
-specialboat4grab = 1
-specialboat5grab = 1
-specialboat6grab = 1
-specialboat7grab = 1
-specialboat8grab = 1
-specialboat9grab = 1
-
-''''Booleans to have the card activate'''
-card1bol = False
-card2bol = False
-card3bol = False
-card4bol = False
-card5bol = False
-card6bol = False
-card7bol = False
-card8bol = False
-card9bol = False
-card10bol = False
-card11bol = False
-card12bol = False
-
-''''trigger to activate boat'''
-boat1bol = False
-boat2bol = False
-boat3bol = False
-boat4bol = False
-boat5bol = False
-boat6bol = False
-boat7bol = False
-boat8bol = False
-
-
-def the_player2winner():
-    global the_player_1
-
-    pygame.display.set_caption("Players")
-    screen2 = pygame.display.set_mode((display_width1, display_height1))
-    pygame.display.update()
-
-    ''''Background image'''
-    the_image2000 = "player1winner.png"
-    screen_image2000 = pygame.display.set_mode((display_width1, display_height1))
-    menu_image2000 = pygame.image.load(the_image2000)
-    screen_image2000.blit(menu_image2000, (0, 0))
-
-    ''''Fonts'''
-    pygame.display.set_caption("Font")
-    my_font = pygame.font.Font(None, 150)
-    thewinner1_font = my_font.render(str(the_player_2 ), 5, black)
-
-    ''''Mouse'''
-    (MouseX, MouseY) = pygame.mouse.get_pos()
-
-    players = True
-    while players == True:
 
         for events in pygame.event.get():
             screen2.blit(thewinner1_font, (380, 250))
@@ -89,17 +6,6 @@ def the_player2winner():
                 if events.key == pygame.K_SPACE:
                     the_menufunction()
 
-            elif events.type == pygame.MOUSEBUTTONDOWN:
-                print(MouseX, MouseY)
-                print("Mouse Button up")
-            elif events.type == pygame.MOUSEBUTTONUP:
-                print(MouseX, MouseY)
-                print("Mouse Button down")
-
-            elif events.type == pygame.MOUSEMOTION:
-                print("mouse at " + " " + str(MouseX) + " " + str(MouseY))
-
-            (MouseX, MouseY) = pygame.mouse.get_pos()
 
         pygame.display.update()
 
@@ -3562,21 +3468,6 @@ def the_settingsfunction():
 
 
 def the_menufunction():
-    '''FPS clock'''
-    fps = clock(60)
-
-
-    ''''Canvas'''
-    pygame.display.set_caption("Menu")
-    screen = pygame.display.set_mode((display_width , display_height))
-    pygame.display.update()
-
-    ''''The image canvas/window'''
-    the_image = "menu.jpg"
-    screen_image = pygame.display.set_mode((display_width, display_height))
-    menu_image =  pygame.image.load(the_image)
-    screen_image.blit(menu_image,(0,0))
-
     ''''The font/letters canvas/window'''
     pygame.display.set_caption("Font")
     my_font = pygame.font.Font(None,50)
