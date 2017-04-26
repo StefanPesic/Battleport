@@ -10,14 +10,33 @@ import sys
 def menuFunction():
     fps = Clock(60)
 
-    display = Display("1108x819", 1600,900)
-    display.Update()
+    display = Display("Fullscreen")
 
     image = ImageLoad("menu.jpg")
     image.blit(display)
 
-    font = Font(None, 90, "Menutest", white)
-    font.blit(display,350,10)
+    font = Font(None, 100, "Welcome to Battleport", white)
+    font.blit(display,10)
+
+    font = Font(None, 100, "Fight", white)
+    font.blit(display,160)
+
+    font = Font(None, 100, "Rules and instructions", white)
+    font.blit(display,310)
+
+    font = Font(None, 100, "High Scores", white)
+    font.blit(display,460)
+
+    font = Font(None, 100, "Settings", white)
+    font.blit(display,610)
+
+    font = Font(None, 100, "Making of", white)
+    font.blit(display,760)
+
+    font = Font(None, 100, "Quit", red)
+    font.blit(display,910)
+
+    font.Rect(display,white)
 
 
     mainMenu = True
@@ -36,13 +55,12 @@ def menuFunction():
 
             if events.type == pygame.KEYDOWN:
                 if events.key == pygame.K_ESCAPE:
-                    pygame.quit();
+                    pygame.quit()
                     sys.exit()
 
-            # the_menu_click(MouseX, MouseY)
             (MouseX, MouseY) = pygame.mouse.get_pos()
 
-        pygame.display.update()
+        display.Update()
 
 
 menuFunction()

@@ -43,37 +43,38 @@ class Title_position:
         self.beginY = beginY
         self.endY = endY
 
-menu_title = Title_position(4,70,5,63)
-endturn_title = Title_position(4,70,360,450)
-nordeck_title = Title_position(4,70,540,600)
-spcdeck_title = Title_position(4,70,645,700)
-playerhead_title = Title_position(855,1020,0,35)
-normalcard1_title = Title_position(775,935,65,180)
-
 class Display:
-    def __init__(self, captiontitle, width, height):
+    def __init__(self, captiontitle):
+        self.screenDetect = pygame.display.Info()
         self.caption = pygame.display.set_caption(captiontitle)
-        self.screen = pygame.display.set_mode((width, height))
-        self.fullScreen =  pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+        self.fullScreen =  pygame.display.set_mode((self.screenDetect.current_w, self.screenDetect.current_h), pygame.FULLSCREEN)
     def displayChange(self, click):
         pass
     def Update(self):
         return pygame.display.update()
 
-class ImageLoad:
+class ImageLoad(Display):
     def __init__(self, imageFile):
+        Display.__init__(self,"Image")
         self.imageFile = imageFile
         self.imageLoading = pygame.image.load(self.imageFile)
-        pygame.transform.scale(self.imageLoading, (1600,900))
+        self.fullImage = pygame.transform.scale(self.imageLoading,(self.screenDetect.current_w, self.screenDetect.current_h))
     def blit(self, screenBox):
-        return screenBox.screen.blit(self.imageLoading, (500, 0))
+        return screenBox.fullScreen.blit(self.fullImage, (0, 0))
 
-class Font:
+#TODO center text
+#TODO make text clickable
+#TODO draw rect
+
+class Font(Display):
     def __init__(self, styleFont, sizeFont, text, colour):
         self.fontSet = pygame.font.Font(styleFont, sizeFont)
         self.fontRender = self.fontSet.render(str(text), 5, colour.showColour()) #TODO edit
-    def blit(self, screenBox, posX, posY):
-        return screenBox.screen.blit(self.fontRender,(posX, posY))
+    def blit(self, screenBox, posY):
+        return screenBox.fullScreen.blit(self.fontRender,(500, posY))
+    def Rect(self, screenBox, colour):
+        return pygame.draw.rect(screenBox, colour.showColour(),(50, 350, 500,600))
+
 
 class Music:
     def __init__(self, volume, audioFile, typePlay):
@@ -104,7 +105,7 @@ class specialBoatGrab: #TODO 9 instances of card, with 9 specialboat9grabs
     def __init__(self):
         self.isSpecialGrab = True
 
-class Player(ImageLoad):
+class Player:
     def __init__(self, turn, playerGrab):
         self.name = ""
         self.isTurn = turn
