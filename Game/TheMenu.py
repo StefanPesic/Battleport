@@ -779,7 +779,7 @@ def the_gamefunction():
 
 
     ''''boat images'''
-    theboat1 =  pygame.image.load("p1boat_2square.png")
+    theboat1 =  pygame.image.load("player1Boat.png")
     theboat2 =  pygame.image.load("p1boat_2square.png")
     theboat3 =  pygame.image.load("p1boat_3square.png")
     theboat4 =  pygame.image.load("p1boat_4square.png")

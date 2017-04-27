@@ -13,10 +13,14 @@ class GameState:
         self.rules = "rules"
         self.scores = "scores"
         self.settings = "settings"
+        self.makingOf = "makingOf"
         self.current = self.menu
-
 gameState = GameState()
 
+class SettingButtons:
+    def __init__(self):
+        self.volume = "volume"
+        self.resolution = "resolution"
 
 class Colour:
     def __init__(self, colourOne, colourTwo, colourThree):
@@ -42,13 +46,12 @@ class Clock:
 
 class Mouse:
     def __init__(self):
-        (self.mouseX, self.mouseY) = pygame.mouse.get_pos()
+        self.mouseX = None
+        self.mouseY = None
         self.click = pygame.mouse.get_pressed()
-    def FigureAppear(self, image, colour, colour1, colourChange, x, y, width, height, tickness):
-        if x + width > (self.mouseX, self.mouseY)[0] > x and y + height > (self.mouseX, self.mouseY)[1] > y:
-            pygame.draw.rect(image, colour (x,y,width,height), tickness)
-        else:
-            pygame.draw.rect(image.colour1, (x,y,width, height), tickness)
+    def mouseMotion(self):
+        (self.mouseX, self.mouseY) = pygame.mouse.get_pos()
+
 
 class Title_position:
     def __init__(self, beginX, endX, beginY, endY):
@@ -73,13 +76,20 @@ class ImageLoad(Display):
     def __init__(self, imageFile):
         Display.__init__(self,"Image")
         self.imageFile = imageFile
-        self.imageLoading = pygame.image.load(self.imageFile)
-        self.fullImage = pygame.transform.scale(self.imageLoading,(self.screenDetect.current_w, self.screenDetect.current_h))
-    def blit(self, screenBox):
+        self.imageLoading = pygame.image.load(self.imageFile).convert_alpha() #doesn't resize image
+        self.fullImage = pygame.transform.scale(self.imageLoading,(self.screenDetect.current_w, self.screenDetect.current_h)) #resizes image to full screen
+        self.posX = None
+        self.posY = None
+    def FullScreenBlit(self, screenBox):
         return screenBox.fullScreen.blit(self.fullImage, (0, 0))
+    def NormalBlit(self):
+        return self.fullScreen.blit(self.imageLoading, (self.posX,self.posY))
+    def setPositions(self, posX, posY):
+        self.posX = posX
+        self.posY = posY
 
-#TODO make text clickable
-#TODO draw rect
+
+
 
 class Font:
     def __init__(self, styleFont, sizeFont, text, colour, name):
@@ -96,9 +106,8 @@ class Font:
     def Rect(self, screenBox, colour, mouseX, mouseY, events):
         rect = pygame.draw.rect(screenBox.fullScreen, colour.showColour(), (self.positionX, self.positionY, self.fontRender.get_width(), self.fontRender.get_height()), 1)
         if rect.collidepoint(mouseX, mouseY) and events.type == pygame.MOUSEBUTTONDOWN:
-            self.Action()
-
-    def Action(self): #when the user clicks
+            self.changeGameState()
+    def changeGameState(self): #The gamestate of the game changes
         if self.name == "fight":
             gameState.current = gameState.fight
 
@@ -111,10 +120,37 @@ class Font:
         elif self.name == "settings":
             gameState.current = gameState.settings
 
+        elif self.name == "making":
+            gameState.current = gameState.makingOf
+
         elif self.name == "quit":
             pygame.quit()
             sys.exit()
+        else:
+            self.ButtonFunctionality()
+    def ButtonFunctionality(self):
+        if gameState.current == gameState.fight:
+            pass
+        elif gameState.current == gameState.rules:
+            if self.name == "back":
+                gameState.current = gameState.menu
 
+        elif gameState.current == gameState.scores:
+            if self.name == "back":
+                gameState.current = gameState.menu
+
+        elif gameState.current == gameState.settings:
+            if self.name == "volume":
+                pass
+            elif self.name == "resolution":
+                pass
+            elif self.name == "back":
+                gameState.current = gameState.menu
+            else:
+                pass
+        elif gameState.current == gameState.makingOf:
+            if self.name == "back":
+                gameState.current = gameState.menu
 
 
 
@@ -148,18 +184,64 @@ class specialBoatGrab: #TODO 9 instances of card, with 9 specialboat9grabs
         self.isSpecialGrab = True
 
 class Player:
-    def __init__(self, turn, playerGrab):
+    def __init__(self, turn):
         self.name = ""
         self.isTurn = turn
-        self.isPlayerGrab = playerGrab
         self.score = 0
-    def playerWinner(self):
-        for events in pygame.event.get():
-            pass
-            if events.type == pygame.KEYDOWN:
-                if events.key == pygame.K_SPACE:
-                    pass #TODO need to go to the menu
 
-class Boat: #TODO make 9 instances of boat
-    def __init__(self):
+
+
+
+class Boat(ImageLoad):
+    def __init__(self, posX, posY, imageFile, isPlayerOne):
+        ImageLoad.__init__(self, imageFile= imageFile )
         self.isActiveBoat = False
+        self.positionX = posX
+        self.positionY = posY
+        self.health = 100
+        self.steps = 2
+        self.isPlayerOne = isPlayerOne
+    def NormalBlit(self):
+        return self.fullScreen.blit(self.imageLoading, (self.positionX, self.positionY))
+    def activateBoat(self, boatsList, index): #activates one boat, resets others
+        for boat in boatsList:
+            if boat == boatsList[index]:
+                boat.isActiveBoat = True
+            else:
+                boat.isActiveBoat = False
+    def Move(self, boatsList, events, isPlayerOne):
+            if isPlayerOne == True:
+                for boat in boatsList:
+                    if boat.isActiveBoat == True:
+                        if events.key == pygame.K_w:
+                            boat.positionY -= 10
+                        elif events.key == pygame.K_s:
+                            boat.positionY += 10
+                        elif events.key == pygame.K_a:
+                            boat.positionX -= 10
+                        elif events.key == pygame.K_d:
+                            boat.positionX += 10
+            else:
+                for boat in boatsList:
+                    if boat.isActiveBoat == True:
+                        if events.key == pygame.K_UP:
+                            boat.positionY -= 10
+                        elif events.key == pygame.K_DOWN:
+                            boat.positionY += 10
+                        elif events.key == pygame.K_LEFT:
+                            boat.positionX -= 10
+                        elif events.key == pygame.K_RIGHT:
+                            boat.positionX += 10
+    def Attack(self, boatsList, isPlayerOne):
+        cannon = Boat(None, None, "Remastered\Images\Fight\Attack\Cannon\cannon.png", None)
+        pass
+
+
+
+
+
+
+
+
+
+
