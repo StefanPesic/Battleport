@@ -1,8 +1,22 @@
 import pygame
 import psycopg2
+import sys
+
 
 ''''Functions remastered'''
 pygame.init()
+
+class GameState:
+    def __init__(self):
+        self.menu = "menu"
+        self.fight = "fight"
+        self.rules = "rules"
+        self.scores = "scores"
+        self.settings = "settings"
+        self.current = self.menu
+
+gameState = GameState()
+
 
 class Colour:
     def __init__(self, colourOne, colourTwo, colourThree):
@@ -53,6 +67,8 @@ class Display:
     def Update(self):
         return pygame.display.update()
 
+display = Display("Fullscreen")
+
 class ImageLoad(Display):
     def __init__(self, imageFile):
         Display.__init__(self,"Image")
@@ -62,18 +78,44 @@ class ImageLoad(Display):
     def blit(self, screenBox):
         return screenBox.fullScreen.blit(self.fullImage, (0, 0))
 
-#TODO center text
 #TODO make text clickable
 #TODO draw rect
 
-class Font(Display):
-    def __init__(self, styleFont, sizeFont, text, colour):
+class Font:
+    def __init__(self, styleFont, sizeFont, text, colour, name):
         self.fontSet = pygame.font.Font(styleFont, sizeFont)
         self.fontRender = self.fontSet.render(str(text), 5, colour.showColour()) #TODO edit
+        self.positionX = None
+        self.positionY = None
+        self.name = name
     def blit(self, screenBox, posY):
-        return screenBox.fullScreen.blit(self.fontRender,(500, posY))
-    def Rect(self, screenBox, colour):
-        return pygame.draw.rect(screenBox, colour.showColour(),(50, 350, 500,600))
+        blit = screenBox.fullScreen.blit(self.fontRender,((screenBox.screenDetect.current_w / 2) - (self.fontRender.get_width() / 2),  posY))
+        self.positionX = blit[0]
+        self.positionY = posY
+        return blit
+    def Rect(self, screenBox, colour, mouseX, mouseY, events):
+        rect = pygame.draw.rect(screenBox.fullScreen, colour.showColour(), (self.positionX, self.positionY, self.fontRender.get_width(), self.fontRender.get_height()), 1)
+        if rect.collidepoint(mouseX, mouseY) and events.type == pygame.MOUSEBUTTONDOWN:
+            self.Action()
+
+    def Action(self): #when the user clicks
+        if self.name == "fight":
+            gameState.current = gameState.fight
+
+        elif self.name == "rules":
+            gameState.current = gameState.rules
+
+        elif self.name == "scores":
+            gameState.current = gameState.scores
+
+        elif self.name == "settings":
+            gameState.current = gameState.settings
+
+        elif self.name == "quit":
+            pygame.quit()
+            sys.exit()
+
+
 
 
 class Music:
@@ -87,9 +129,9 @@ class Music:
         scroll = 10
         pass
 
-effectSilencer = Music(100, "silencer.wav", -1)
-effectCannon = Music(100, "cannon.wav", -1)
-musicPlay = Music(100, "musictheme.wav", -1)
+# effectSilencer = Music(100, "silencer.wav", -1)
+# effectCannon = Music(100, "cannon.wav", -1)
+# musicPlay = Music(100, "musictheme.wav", -1)
 
 class DataBase:
     def __init__(self, host, database, user, password):
