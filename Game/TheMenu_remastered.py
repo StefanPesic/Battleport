@@ -5,14 +5,29 @@ import psycopg2
 import sys
 
 
-
 #TODO database login
 #Database login: (host= "localhost", database="postgres", user= "postgres", password="WallSpeaker5" )
 
+#In Fight the actual game is
 def Fight():
-    image = ImageLoad("Remastered\Images\Fight\Background\map.jpg")
+    playerOne = Player(True) # Player instance to keep track of the score
+    playerTwo = Player(False)
 
-    playerOneBoatOne = Boat(3,126, "Remastered\Images\Fight\Boats\player_1\player1Boat.png", True)
+    timer = Clock(60) #used for the scoreboard to keep track of the time
+
+    image = ImageLoad("Remastered\Images\Fight\Background\map.jpg")
+    scoreboard = ImageLoad("Remastered\Images\Fight\Scoreboard\scoreboard.png")
+    playerOneScore = Font("Remastered\Fonts\Scoreboard\score_board_st\Score Board St.ttf", 110, str(playerOne.score), red, "playerOneScore")
+    playerTwoScore = Font("Remastered\Fonts\Scoreboard\score_board_st\Score Board St.ttf", 110, str(playerTwo.score), red, "playerTwoScore")
+
+    secondScoreboard = Font("Remastered\Fonts\Scoreboard\score_board_st\Score Board St.ttf", 130, str(timer.seconds), red, "secondScoreboard")
+    minuteScoreboard = Font("Remastered\Fonts\Scoreboard\score_board_st\Score Board St.ttf", 130, str(timer.minutes), red,
+                            "minuteScoreboard")
+
+    playerOneStatsBoard = ImageLoad("Remastered\Images\Fight\Stats\stats.png") #boat stats, health damage etc
+    playerTwoStatsBoard = ImageLoad("Remastered\Images\Fight\Stats\stats.png")
+
+    playerOneBoatOne = Boat(3,126, "Remastered\Images\Fight\Boats\player_1\player1Boat.png", True) #The actual boats
     playerOneBoatTwo = Boat(3, 311, "Remastered\Images\Fight\Boats\player_1\player1Boat.png", True)
     playerOneBoatThree = Boat(3, 500, "Remastered\Images\Fight\Boats\player_1\player1Boat.png", True)
     playerOneBoatFour = Boat(3, 683, "Remastered\Images\Fight\Boats\player_1\player1Boat.png", True)
@@ -22,20 +37,26 @@ def Fight():
     playerTwoBoatThree = Boat(1490, 496, "Remastered\Images\Fight\Boats\player_2\player2Boat.png", False)
     playerTwoBoatFour = Boat(1490, 681, "Remastered\Images\Fight\Boats\player_2\player2Boat.png", False)
 
-    dummyBoat = Boat(None,None, "Remastered\Images\Fight\Boats\dummy\dummy.png", False)
+    dummyBoat = Boat(None,None, "Remastered\Images\Fight\Boats\dummy\dummy.png", None) #Used to access methods
 
+    fontHealthPlayerOne = Font(None, 100, "", white, "fontHealthPlayerOne")
+    fontHealthPlayerTwo = Font(None, 100, "", white, "fontHealthPlayerTwo")
 
-
-
-    playerOneBoats = [] #array to change the state of the objects
+    playerOneBoats = [] #array to change the state of the objects(isActive etc)
     playerOneBoats.extend((playerOneBoatOne, playerOneBoatTwo, playerOneBoatThree, playerOneBoatFour))
     playerTwoBoats = []
     playerTwoBoats.extend((playerTwoBoatOne, playerTwoBoatTwo, playerTwoBoatThree, playerTwoBoatFour))
 
-    playerOne = Player(True)
-    playerTwo = Player(False)
+    playerOneAttacks = []  # When user clicks on the attack button it is put in this list
+    playerOneFights = [] #the sprites (cannons) will be loaded in this list
+    playerOneResult = None #To store the sprite
 
-    while gameState.current == gameState.fight:
+    playerTwoAttacks = []
+    playerTwoFights = []
+    playerTwoResult = None
+
+
+    while gameState.current == gameState.fight: #when gamestate changes, another page is opened
         for events in pygame.event.get():
             if events.type == pygame.QUIT:
                 pygame.quit(); sys.exit()
@@ -67,18 +88,22 @@ def Fight():
                 elif events.key == pygame.K_d:
                     pass
                 elif events.key == pygame.K_1:
-                    dummyBoat.activateBoat(playerOneBoats,0)
+                    dummyBoat.activateBoat(playerOneBoats,0) #actives one boat and resets the rest
+                    fontHealthPlayerOne.reloadText("H: " + str(playerOneBoatOne.health)) #to update the boat stats on the stats wall
                 elif events.key == pygame.K_2:
                     dummyBoat.activateBoat(playerOneBoats, 1)
+                    fontHealthPlayerOne.reloadText("H: " + str(playerOneBoatTwo.health))
                 elif events.key == pygame.K_3:
                     dummyBoat.activateBoat(playerOneBoats, 2)
+                    fontHealthPlayerOne.reloadText("H: " + str(playerOneBoatThree.health))
                 elif events.key == pygame.K_4:
                     dummyBoat.activateBoat(playerOneBoats, 3)
-                elif events.key == pygame.K_SPACE:
-                    pass
+                    fontHealthPlayerOne.reloadText("H: " + str(playerOneBoatFour.health))
+                elif events.key == pygame.K_q: #Attack
+                    playerOneAttacks.append(dummyBoat)
+
 
                 #Player 2 Keys
-
                 elif  events.key ==  pygame.K_UP:
                     pass
                 elif events.key == pygame.K_LEFT:
@@ -89,38 +114,82 @@ def Fight():
                     pass
                 elif events.key == pygame.K_7:
                     dummyBoat.activateBoat(playerTwoBoats, 0)
+                    fontHealthPlayerTwo.reloadText("H: " + str(playerTwoBoatOne.health))
                 elif events.key == pygame.K_8:
                     dummyBoat.activateBoat(playerTwoBoats, 1)
+                    fontHealthPlayerTwo.reloadText("H: " + str(playerTwoBoatTwo.health))
                 elif events.key == pygame.K_9:
                     dummyBoat.activateBoat(playerTwoBoats, 2)
+                    fontHealthPlayerTwo.reloadText("H: " + str(playerTwoBoatThree.health))
                 elif events.key == pygame.K_0:
                     dummyBoat.activateBoat(playerTwoBoats, 3)
-
+                    fontHealthPlayerTwo.reloadText("H: " + str(playerTwoBoatFour.health))
+                elif events.key == pygame.K_RCTRL: #Attack
+                    playerTwoAttacks.append(dummyBoat)
 
         display.Update()
         image.FullScreenBlit(display)
-        playerOneBoatOne.NormalBlit()
-        playerOneBoatTwo.NormalBlit()
-        playerOneBoatThree.NormalBlit()
-        playerOneBoatFour.NormalBlit()
 
-        playerTwoBoatOne.NormalBlit()
-        playerTwoBoatTwo.NormalBlit()
-        playerTwoBoatThree.NormalBlit()
-        playerTwoBoatFour.NormalBlit()
+        #Player 1 attacks
+        if len(playerOneAttacks) > 0: #For the attacks
+            for i in range(len(playerOneAttacks)):
+                playerOneResult = playerOneAttacks[i].Attack(playerOneBoats) #Cannon Sprite is saved in playerOneResult
+                playerOneFights.append(playerOneResult)
+            del playerOneAttacks[0]
 
+        if len(playerOneFights) > 0 :
+            for i in range(len(playerOneFights)):
+                dummyBoat.GetAttacked(playerOneFights[i], True) #the position of the cannon sprites are updated
+                playerOneFights[i].NormalBlit(70,60) #Loads the cannon sprite
 
+        #Player 2 Attacks
+        if len(playerTwoAttacks) > 0:  # For the attacks
+            for i in range(len(playerTwoAttacks)):
+                playerTwoResult = playerTwoAttacks[i].Attack(playerTwoBoats)
+                playerTwoFights.append(playerTwoResult)
+            del playerTwoAttacks[0]
 
+        if len(playerTwoFights) > 0:
+            for i in range(len(playerTwoFights)):
+                dummyBoat.GetAttacked(playerTwoFights[i], False)
+                playerTwoFights[i].NormalBlit(70,60)
 
+        playerOneBoatOne.NormalBlit(None, None) #Blits (shows) the boat
+        playerOneBoatOne.Rect(display,white, 100,100, events, playerTwoFights) #Creates rect around the boat (for collision)
+        playerOneBoatTwo.NormalBlit(None, None)
+        playerOneBoatThree.NormalBlit(None, None)
+        playerOneBoatFour.NormalBlit(None, None)
 
+        playerTwoBoatOne.NormalBlit(None, None)
+        playerTwoBoatTwo.NormalBlit(None, None)
+        playerTwoBoatThree.NormalBlit(None, None)
+        playerTwoBoatFour.NormalBlit(None, None)
 
+        playerOneScore.reloadText(str(playerOne.score)) #Scoreboard scores get updated
+        playerTwoScore.reloadText(str(playerTwo.score))
+
+        scoreboard.NormalBlit(scoreboard.screenDetect.current_w / 2 - scoreboard.imageLoading.get_width() / 2 , 860, None, None)
+        playerOneScore.PositionBlit(display, 390, 925)
+        playerTwoScore.PositionBlit(display, 1150, 925)
+
+        timer.Tick() #Updates time of the scoreboard
+        secondScoreboard.reloadText(str(timer.seconds))
+        minuteScoreboard.reloadText(str(timer.minutes))
+        secondScoreboard.PositionBlit(display, 857, 877)
+        minuteScoreboard.PositionBlit(display, 660, 877)
+
+        playerOneStatsBoard.NormalBlit(0,870, 360, 180)
+        playerTwoStatsBoard.NormalBlit(1320, 870, 360, 180)
+
+        fontHealthPlayerOne.PositionBlit(display, 2, 870)
+        fontHealthPlayerTwo.PositionBlit(display, 1320, 870)
 
     GameStateLoop()
 
 
 
 def MakingOf():
-    image = ImageLoad("Remastered\Images\Menu\Making_Of\makingOf.jpg")
+    image = ImageLoad("Remastered\Images\Menu\Making_Of\makingOf.jpg") #Background
     image.FullScreenBlit(display)
 
     fontMakingOf = Font(None, 100, "Making of", blue, "makingOf")
@@ -146,9 +215,9 @@ def MakingOf():
                     pygame.quit()
                     sys.exit()
             (MouseX, MouseY) = pygame.mouse.get_pos()
-            fontBack.Rect(display, black, MouseX, MouseY, events)
+            fontBack.Rect(display, black, MouseX, MouseY, events) #Makes the font clickable
         display.Update()
-    GameStateLoop()
+    GameStateLoop() #When the gamestate changes, it will go in to the gamestateloop that goes to another page.
 
 
 
@@ -324,7 +393,7 @@ def MenuFunction():
         display.Update()
     GameStateLoop()
 
-def GameStateLoop(): #changes the page depending on the gamestate
+def GameStateLoop(): #changes the page depending on the gamestate.
     gameStateLoop = True
     while gameStateLoop:
         if gameState.current == gameState.menu:
@@ -339,7 +408,6 @@ def GameStateLoop(): #changes the page depending on the gamestate
             Settings()
         elif gameState.current == gameState.makingOf:
             MakingOf()
-
     gameStateLoop = False
 
 GameStateLoop()
