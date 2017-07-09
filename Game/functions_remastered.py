@@ -48,7 +48,6 @@ class Clock:
         if self.changingNumber > 60:
             self.minutes += 1
             self.changingNumber = 0
-            print(self.seconds)
         else:
             self.changingNumber += 0.01
 
@@ -131,12 +130,12 @@ class Font:
 
         elif self.name == "making":
             gameState.current = gameState.makingOf
-
         elif self.name == "quit":
             pygame.quit()
             sys.exit()
         else:
             self.ButtonFunctionality()
+
     def ButtonFunctionality(self): #For the buttons of each page
         if gameState.current == gameState.fight:
             pass

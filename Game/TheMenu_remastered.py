@@ -186,8 +186,6 @@ def Fight():
 
     GameStateLoop()
 
-
-
 def MakingOf():
     image = ImageLoad("Remastered\Images\Menu\Making_Of\makingOf.jpg") #Background
     image.FullScreenBlit(display)
@@ -218,8 +216,6 @@ def MakingOf():
             fontBack.Rect(display, black, MouseX, MouseY, events) #Makes the font clickable
         display.Update()
     GameStateLoop() #When the gamestate changes, it will go in to the gamestateloop that goes to another page.
-
-
 
 def Rules():
     image = ImageLoad("Remastered\Images\Menu\Rules\gameRules.jpg")
@@ -255,7 +251,6 @@ def Rules():
         display.Update()
     GameStateLoop()
 
-
 def HighScores():
     image = ImageLoad("Remastered\Images\Menu\High_Scores\highscores.jpg")
     image.FullScreenBlit(display)
@@ -272,21 +267,16 @@ def HighScores():
     fontBack = Font(None, 100, "Back", red, "back")
     fontBack.blit(display,910)
 
-
-
     while gameState.current == gameState.scores:
         for events in pygame.event.get():
             if events.type == pygame.QUIT:
                 pygame.quit(); sys.exit()
             elif events.type == pygame.MOUSEBUTTONDOWN:
                 pass
-
             elif events.type == pygame.MOUSEBUTTONUP:
                  pass
-
             elif events.type == pygame.MOUSEMOTION:
                 pass
-
             if events.type == pygame.KEYDOWN:
                 if events.key == pygame.K_ESCAPE:
                     pygame.quit()
