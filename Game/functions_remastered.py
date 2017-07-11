@@ -118,16 +118,12 @@ class Font:
     def changeGameState(self): #The gamestate of the game changes, and depending on the state, a page will be loaded
         if self.name == "fight":
             gameState.current = gameState.fight
-
         elif self.name == "rules":
             gameState.current = gameState.rules
-
         elif self.name == "scores":
             gameState.current = gameState.scores
-
         elif self.name == "settings":
             gameState.current = gameState.settings
-
         elif self.name == "making":
             gameState.current = gameState.makingOf
         elif self.name == "quit":
@@ -146,7 +142,6 @@ class Font:
         elif gameState.current == gameState.scores:
             if self.name == "back":
                 gameState.current = gameState.menu
-
         elif gameState.current == gameState.settings:
             if self.name == "volume":
                 pass
@@ -164,16 +159,22 @@ class Music:
     def __init__(self, volume, audioFile, typePlay):
         self.audiofile = pygame.mixer.music.load(audioFile)
         self.volume = pygame.mixer.music.set_volume(volume)
-        self.typePlay = pygame.mixer.music.play(typePlay)
+        self.typePlay =  typePlay
+        self.audioLocation = audioFile
     def playSound(self):
-        return pygame.mixer.Sound(self.audiofile)
+        return pygame.mixer.music.play(self.typePlay)
+    def playList(self, musicList, index):
+        return musicList[index].PlaySound()
     def scroll(self, scroll):
         scroll = 10
         pass
 
-effectSilencer = Music(0, "silencer.wav", 0)
-effectCannon = Music(0, "cannon.wav", 0)
-musicPlay = Music(0, "musictheme.wav", 0) #songs are being loaded but not played because volume is 0
+
+# effectSilencer = Music(10, "silencer.wav", 0)
+# effectCannon = Music(70, "cannon.wav", 0)
+# musicPlay = Music(0, "musictheme.wav", 0) #songs are being loaded but not played because volume is 0
+
+
 
 #For the highscores
 class DataBase:
@@ -188,13 +189,18 @@ class Player:
         self.name = ""
         self.isTurn = turn
         self.score = 0
-    def CheckDefeatedBoats(self, boatsList):
+        self.defeatedBoats = []
+    def ChangePlayerScore(self, boatsList):
         for boat in boatsList:
             if boat.defeated == True:
-                self.score += 1
+                    boatsList.remove(boat)
+                    self.score += 1
+                    self.CheckPlayerScore()
+    def CheckPlayerScore(self):
+        if(self.score >= 4):
+            gameState.current = gameState.menu
 
-
-#For the boats of the game
+#For the boats of the gamed
 class Boat(ImageLoad):
     def __init__(self, posX, posY, imageFile, isPlayerOne):
         ImageLoad.__init__(self, imageFile= imageFile )
@@ -204,6 +210,8 @@ class Boat(ImageLoad):
         self.positionY = posY
         self.health = 100
         self.isPlayerOne = isPlayerOne #To seperate player 1 and player 2 boats
+
+
     def NormalBlit(self, width, height, boatlist):
         if width == None and height == None: #Width and height are optional
             for i in boatlist:
@@ -221,7 +229,7 @@ class Boat(ImageLoad):
     def Move(self, boatsList, events, isPlayerOne):
             if isPlayerOne == True:
                 for boat in boatsList:
-                    if not boat.SetDefeat(boat):
+                    if boat.defeated != True:
                         if boat.isActiveBoat == True:
                             if events.key == pygame.K_w:
                                 boat.positionY -= self.imageLoading.get_height() / 2
@@ -233,7 +241,7 @@ class Boat(ImageLoad):
                                 boat.positionX +=  self.imageLoading.get_width() / 3
             else:
                 for boat in boatsList:
-                    if not boat.SetDefeat(boat):
+                    if boat.defeated != True:
                         if boat.isActiveBoat == True:
                             if events.key == pygame.K_UP:
                                 boat.positionY -= self.imageLoading.get_height() / 2
@@ -261,11 +269,13 @@ class Boat(ImageLoad):
                                                                                     boat.imageLoading.get_height()), 1)
             if len(cannonList) > 0:
                 for cannon in cannonList:
-                    cannonDrawRect = pygame.draw.rect(screenBox.fullScreen, colour.showColour(), (cannon.positionX, cannon.positionY, cannon.imageLoading.get_width() / 5 , cannon.imageLoading.get_height() / 7), 1)
+                    cannonDrawRect = pygame.draw.rect(screenBox.fullScreen, colour.showColour(), (cannon.positionX, cannon.positionY, cannon.imageLoading.get_width() / 5 , cannon.imageLoading.get_height() / 7.5), 1)
                     if(boatRect.colliderect(cannonDrawRect)):
-                        boat.health -= 100
-                        break
-    def SetDefeat(self, boat):
-        if boat.health <= 0:
-            boat.defeated = True
-        return boat.defeated
+
+                        boat.health -= 1000
+                        cannonList.remove(cannon)
+    def SetDefeat(self, boatList):
+        for boat in boatList:
+            if boat.health <= 0:
+                boat.defeated = True
+        return True

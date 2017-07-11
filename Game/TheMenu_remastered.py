@@ -160,6 +160,16 @@ def Fight():
         dummyBoat.Rect(display,white, playerTwoFights, playerOneBoats) #Creates rect around the boats (for collision)
         dummyBoat.Rect(display, red, playerOneFights, playerTwoBoats)
 
+
+
+
+
+        playerOne.ChangePlayerScore(playerTwoBoats)
+        playerTwo.ChangePlayerScore(playerOneBoats)
+
+        dummyBoat.SetDefeat(playerOneBoats)
+        dummyBoat.SetDefeat(playerTwoBoats)
+
         playerOneScore.reloadText(str(playerOne.score)) #Scoreboard scores get updated
         playerTwoScore.reloadText(str(playerTwo.score))
 
@@ -178,6 +188,8 @@ def Fight():
 
         fontHealthPlayerOne.PositionBlit(display, 2, 870)
         fontHealthPlayerTwo.PositionBlit(display, 1320, 870)
+
+
 
     GameStateLoop()
 
@@ -324,8 +336,6 @@ def Settings():
 
 
 def MenuFunction():
-    # fps = Clock(60)
-
     image = ImageLoad("Remastered\Images\Menu\Main_Menu\menu.jpg")
     image.FullScreenBlit(display)
 
