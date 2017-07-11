@@ -1,12 +1,24 @@
 from functions_remastered import *
-import pygame_textInput_remastered
-from pygame_textInput_remastered import *
 import psycopg2
 import sys
+from abc import ABC
 
 
 #TODO database login
 #Database login: (host= "localhost", database="postgres", user= "postgres", password="WallSpeaker5" )
+
+
+class AbstractMenuPage(ABC):
+    __metaclass__ = ABC.__abstractmethods__
+    def BlitImages(self):
+        raise NotImplementedError("Abstract method")
+    def BlitFonts(self):
+        raise NotImplementedError("Abstract method")
+    def CallObjects(self):
+        raise NotImplementedError("Abstract method")
+    def GameLoop(self):
+        raise NotImplementedError("Abstract method")
+
 
 #In Fight the actual game is
 def Fight():
@@ -160,10 +172,6 @@ def Fight():
         dummyBoat.Rect(display,white, playerTwoFights, playerOneBoats) #Creates rect around the boats (for collision)
         dummyBoat.Rect(display, red, playerOneFights, playerTwoBoats)
 
-
-
-
-
         playerOne.ChangePlayerScore(playerTwoBoats)
         playerTwo.ChangePlayerScore(playerOneBoats)
 
@@ -188,221 +196,253 @@ def Fight():
 
         fontHealthPlayerOne.PositionBlit(display, 2, 870)
         fontHealthPlayerTwo.PositionBlit(display, 1320, 870)
+    GameStateLoop.MainGameLoop()
 
 
-
-    GameStateLoop()
-
-def MakingOf():
-    image = ImageLoad("Remastered\Images\Menu\Making_Of\makingOf.jpg") #Background
-    image.FullScreenBlit(display)
-
-    fontMakingOf = Font(None, 100, "Making of", blue, "makingOf")
-    fontMakingOf.blit(display,10)
-
-    fontBack = Font(None, 100, "Back", red, "back")
-    fontBack.blit(display,910)
-
-    while gameState.current == gameState.makingOf:
-        for events in pygame.event.get():
-            if events.type == pygame.QUIT:
-                pygame.quit(); sys.exit()
-            elif events.type == pygame.MOUSEBUTTONDOWN:
-                pass
-
-            elif events.type == pygame.MOUSEBUTTONUP:
-                 pass
-
-            elif events.type == pygame.MOUSEMOTION:
-                pass
-            elif events.type == pygame.KEYDOWN:
-                if events.key == pygame.K_ESCAPE:
+class MakingOf(AbstractMenuPage):
+    def __init__(self):
+        self.image = ImageLoad("Remastered\Images\Menu\Making_Of\makingOf.jpg")  # Background
+        self.fontMakingOf = Font(None, 100, "Making of", blue, "makingOf")
+        self.fontBack = Font(None, 100, "Back", red, "back")
+    def BlitImages(self):
+        self.image.FullScreenBlit(display)
+    def BlitFonts(self):
+        self.fontMakingOf.blit(display, 10)
+        self.fontBack.blit(display, 910)
+    def CallObjects(self):
+        self.BlitImages()
+        self.BlitFonts()
+    def GameLoop(self):
+        self.CallObjects()
+        while gameState.current == gameState.makingOf:
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            (MouseX, MouseY) = pygame.mouse.get_pos()
-            fontBack.Rect(display, black, MouseX, MouseY, events) #Makes the font clickable
-        display.Update()
-    GameStateLoop() #When the gamestate changes, it will go in to the gamestateloop that goes to another page.
+                elif events.type == pygame.MOUSEBUTTONDOWN:
+                    pass
 
-def Rules():
-    image = ImageLoad("Remastered\Images\Menu\Rules\gameRules.jpg")
-    image.FullScreenBlit(display)
+                elif events.type == pygame.MOUSEBUTTONUP:
+                    pass
 
-    fontRules = Font(None, 100, "Rules and instructions", blue, "rules")
-    fontRules.blit(display,10)
+                elif events.type == pygame.MOUSEMOTION:
+                    pass
+                elif events.type == pygame.KEYDOWN:
+                    if events.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
+                (MouseX, MouseY) = pygame.mouse.get_pos()
+                self.fontBack.Rect(display, black, MouseX, MouseY, events)  # Makes the font clickable
+            display.Update()
+        GameStateLoop.MainGameLoop()
 
-    fontForward = Font(None, 100, "Foward", white, "forward")
-    fontForward.blit(display,310)
 
-    fontBack = Font(None, 100, "Back", red, "back")
-    fontBack.blit(display,910)
-
-    while gameState.current == gameState.rules:
-        for events in pygame.event.get():
-            if events.type == pygame.QUIT:
-                pygame.quit(); sys.exit()
-            elif events.type == pygame.MOUSEBUTTONDOWN:
-                pass
-
-            elif events.type == pygame.MOUSEBUTTONUP:
-                 pass
-
-            elif events.type == pygame.MOUSEMOTION:
-                pass
-            if events.type == pygame.KEYDOWN:
-                if events.key == pygame.K_ESCAPE:
+class Rules(AbstractMenuPage):
+    def __init__(self):
+        self.image = ImageLoad("Remastered\Images\Menu\Rules\gameRules.jpg")
+        self.fontRules = Font(None, 100, "Rules and instructions", blue, "rules")
+        self.fontForward = Font(None, 100, "Foward", white, "forward")
+        self.fontBack = Font(None, 100, "Back", red, "back")
+    def BlitImages(self):
+        self.image.FullScreenBlit(display)
+    def BlitFonts(self):
+        self.fontRules.blit(display, 10)
+        self.fontForward.blit(display, 310)
+        self.fontBack.blit(display, 910)
+    def CallObjects(self):
+        self.BlitImages()
+        self.BlitFonts()
+    def GameLoop(self):
+        self.CallObjects()
+        while gameState.current == gameState.rules:
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            (MouseX, MouseY) = pygame.mouse.get_pos()
-            fontBack.Rect(display, black, MouseX, MouseY, events)
-        display.Update()
-    GameStateLoop()
+                elif events.type == pygame.MOUSEBUTTONDOWN:
+                    pass
 
-def HighScores():
-    image = ImageLoad("Remastered\Images\Menu\High_Scores\highscores.jpg")
-    image.FullScreenBlit(display)
+                elif events.type == pygame.MOUSEBUTTONUP:
+                    pass
 
-    fontHighScore = Font(None, 100, "High Scores", blue, "highScoreTitle")
-    fontHighScore.blit(display,10)
+                elif events.type == pygame.MOUSEMOTION:
+                    pass
+                if events.type == pygame.KEYDOWN:
+                    if events.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
+                (MouseX, MouseY) = pygame.mouse.get_pos()
+                self.fontBack.Rect(display, black, MouseX, MouseY, events)
+            display.Update()
+        GameStateLoop.MainGameLoop()
 
-    fontName = Font(None, 100, "Name", white, "name")
-    fontName.blit(display,160)
 
-    fontScore = Font(None, 100, "Score", white, "score")
-    fontScore.blit(display,310)
-
-    fontBack = Font(None, 100, "Back", red, "back")
-    fontBack.blit(display,910)
-
-    while gameState.current == gameState.scores:
-        for events in pygame.event.get():
-            if events.type == pygame.QUIT:
-                pygame.quit(); sys.exit()
-            elif events.type == pygame.MOUSEBUTTONDOWN:
-                pass
-            elif events.type == pygame.MOUSEBUTTONUP:
-                 pass
-            elif events.type == pygame.MOUSEMOTION:
-                pass
-            if events.type == pygame.KEYDOWN:
-                if events.key == pygame.K_ESCAPE:
+class HighScores(AbstractMenuPage):
+    def __init__(self):
+        self.image = ImageLoad("Remastered\Images\Menu\High_Scores\highscores.jpg")
+        self.fontHighScore = Font(None, 100, "High Scores", blue, "highScoreTitle")
+        self.fontName = Font(None, 100, "Name", white, "name")
+        self.fontScore = Font(None, 100, "Score", white, "score")
+        self.fontBack = Font(None, 100, "Back", red, "back")
+    def BlitImages(self):
+        self.image.FullScreenBlit(display)
+    def BlitFonts(self):
+        self.fontHighScore.blit(display, 10)
+        self.fontName.blit(display, 160)
+        self.fontScore.blit(display, 310)
+        self.fontBack.blit(display, 910)
+    def CallObjects(self):
+        self.BlitImages()
+        self.BlitFonts()
+    def GameLoop(self):
+        self.CallObjects()
+        while gameState.current == gameState.scores:
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            (MouseX, MouseY) = pygame.mouse.get_pos()
-            fontBack.Rect(display, black, MouseX, MouseY, events)
-        display.Update()
-    GameStateLoop()
+                elif events.type == pygame.MOUSEBUTTONDOWN:
+                    pass
+                elif events.type == pygame.MOUSEBUTTONUP:
+                    pass
+                elif events.type == pygame.MOUSEMOTION:
+                    pass
+                if events.type == pygame.KEYDOWN:
+                    if events.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
+                (MouseX, MouseY) = pygame.mouse.get_pos()
+                self.fontBack.Rect(display, black, MouseX, MouseY, events)
+            display.Update()
+        GameStateLoop.MainGameLoop()
 
-def Settings():
-    image = ImageLoad("Remastered\Images\Menu\Settings\settings.jpg")
-    image.FullScreenBlit(display)
 
-    fontSettings = Font(None, 100, "Settings", blue, "settingsTitle")
-    fontSettings.blit(display,10)
-
-    fontVolume = Font(None, 100, "Volume", white, "volume")
-    fontVolume.blit(display, 160)
-
-    fontResolution = Font(None, 100, "Resolution", white, "resolution")
-    fontResolution.blit(display, 310)
-
-    fontBack = Font(None, 100, "Back", red, "back")
-    fontBack.blit(display,910)
-
-    while gameState.current == gameState.settings:
-        for events in pygame.event.get():
-            if events.type == pygame.QUIT:
-                pygame.quit(); sys.exit()
-            elif events.type == pygame.MOUSEBUTTONDOWN:
-                pass
-
-            elif events.type == pygame.MOUSEBUTTONUP:
-                 pass
-
-            elif events.type == pygame.MOUSEMOTION:
-                pass
-
-            if events.type == pygame.KEYDOWN:
-                if events.key == pygame.K_ESCAPE:
+class Settings(AbstractMenuPage):
+    def __init__(self):
+        self.image = ImageLoad("Remastered\Images\Menu\Settings\settings.jpg")
+        self.fontSettings = Font(None, 100, "Settings", blue, "settingsTitle")
+        self.fontVolume = Font(None, 100, "Volume", white, "volume")
+        self.fontResolution = Font(None, 100, "Resolution", white, "resolution")
+        self.fontBack = Font(None, 100, "Back", red, "back")
+    def BlitImages(self):
+        self.image.FullScreenBlit(display)
+    def BlitFonts(self):
+        self.fontSettings.blit(display, 10)
+        self.fontVolume.blit(display, 160)
+        self.fontResolution.blit(display, 310)
+        self.fontBack.blit(display, 910)
+    def CallObjects(self):
+        self.BlitImages()
+        self.BlitFonts()
+    def GameLoop(self):
+        self.CallObjects()
+        while gameState.current == gameState.settings:
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            (MouseX, MouseY) = pygame.mouse.get_pos()
-            fontVolume.Rect(display, black, MouseX, MouseY, events)
-            fontResolution.Rect(display, black, MouseX, MouseY, events)
-            fontBack.Rect(display, black, MouseX, MouseY, events)
+                elif events.type == pygame.MOUSEBUTTONDOWN:
+                    pass
 
-        display.Update()
-    GameStateLoop()
+                elif events.type == pygame.MOUSEBUTTONUP:
+                    pass
+
+                elif events.type == pygame.MOUSEMOTION:
+                    pass
+
+                if events.type == pygame.KEYDOWN:
+                    if events.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
+                (MouseX, MouseY) = pygame.mouse.get_pos()
+                self.fontVolume.Rect(display, black, MouseX, MouseY, events)
+                self.fontResolution.Rect(display, black, MouseX, MouseY, events)
+                self.fontBack.Rect(display, black, MouseX, MouseY, events)
+
+            display.Update()
+        GameStateLoop.MainGameLoop()
 
 
-def MenuFunction():
-    image = ImageLoad("Remastered\Images\Menu\Main_Menu\menu.jpg")
-    image.FullScreenBlit(display)
-
-    fontWelcome = Font(None, 100, "Welcome to Battleport", blue, "welcomeTitle")
-    fontWelcome.blit(display,10)
-
-    fontFight = Font(None, 100, "Fight", white, "fight")
-    fontFight.blit(display,160)
-
-    fontRules = Font(None, 100, "Rules and instructions", white, "rules")
-    fontRules.blit(display,310)
-
-    fontScores = Font(None, 100, "High Scores", white, "scores")
-    fontScores.blit(display,460)
-
-    fontSettings = Font(None, 100, "Settings", white, "settings" )
-    fontSettings.blit(display,610)
-
-    fontMakingOf = Font(None, 100, "Making of", white, "making")
-    fontMakingOf.blit(display,760)
-
-    fontQuit = Font(None, 100, "Quit", red, "quit")
-    fontQuit.blit(display,910)
-
-    while gameState.current == gameState.menu:
-        for events in pygame.event.get():
-            if events.type == pygame.QUIT:
-                pygame.quit(); sys.exit()
-            elif events.type == pygame.MOUSEBUTTONDOWN:
-                pass
-
-            elif events.type == pygame.MOUSEBUTTONUP:
-                 pass
-
-            elif events.type == pygame.MOUSEMOTION:
-                pass
-
-            if events.type == pygame.KEYDOWN:
-                if events.key == pygame.K_ESCAPE:
+class Menu(AbstractMenuPage):
+    def __init__(self):
+        self.image = ImageLoad("Remastered\Images\Menu\Main_Menu\menu.jpg")
+        self.fontWelcome = Font(None, 100, "Welcome to Battleport", blue, "welcomeTitle")
+        self.fontFight = Font(None, 100, "Fight", white, "fight")
+        self.fontRules = Font(None, 100, "Rules and instructions", white, "rules")
+        self.fontScores = Font(None, 100, "High Scores", white, "scores")
+        self.fontSettings = Font(None, 100, "Settings", white, "settings")
+        self.fontMakingOf = Font(None, 100, "Making of", white, "making")
+        self.fontQuit = Font(None, 100, "Quit", red, "quit")
+    def BlitImages(self):
+        self.image.FullScreenBlit(display)
+    def BlitFonts(self):
+        self.fontWelcome.blit(display, 10)
+        self.fontFight.blit(display, 160)
+        self.fontRules.blit(display, 310)
+        self.fontScores.blit(display, 460)
+        self.fontSettings.blit(display, 610)
+        self.fontSettings.blit(display, 610)
+        self.fontMakingOf.blit(display, 760)
+        self.fontQuit.blit(display, 910)
+    def CallObjects(self):
+        self.BlitImages()
+        self.BlitFonts()
+    def GameLoop(self):
+        self.CallObjects()
+        while gameState.current == gameState.menu:
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            (MouseX, MouseY) = pygame.mouse.get_pos()
-            fontFight.Rect(display, black, MouseX, MouseY, events)
-            fontRules.Rect(display, black, MouseX, MouseY, events)
-            fontScores.Rect(display, black, MouseX, MouseY, events)
-            fontSettings.Rect(display, black, MouseX, MouseY, events)
-            fontMakingOf.Rect(display, black, MouseX, MouseY, events)
-            fontQuit.Rect(display, black, MouseX, MouseY, events)
+                elif events.type == pygame.MOUSEBUTTONDOWN:
+                    pass
 
-        display.Update()
-    GameStateLoop()
+                elif events.type == pygame.MOUSEBUTTONUP:
+                    pass
 
-def GameStateLoop(): #changes the page depending on the gamestate.
-    gameStateLoop = True
-    while gameStateLoop:
-        if gameState.current == gameState.menu:
-            MenuFunction()
-        elif gameState.current == gameState.fight:
-            Fight()
-        elif gameState.current == gameState.scores:
-            HighScores()
-        elif gameState.current == gameState.rules:
-            Rules()
-        elif gameState.current == gameState.settings:
-            Settings()
-        elif gameState.current == gameState.makingOf:
-            MakingOf()
-    gameStateLoop = False
+                elif events.type == pygame.MOUSEMOTION:
+                    pass
 
-GameStateLoop()
+                if events.type == pygame.KEYDOWN:
+                    if events.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
+                (MouseX, MouseY) = pygame.mouse.get_pos()
+                self.fontFight.Rect(display, black, MouseX, MouseY, events)
+                self.fontRules.Rect(display, black, MouseX, MouseY, events)
+                self.fontScores.Rect(display, black, MouseX, MouseY, events)
+                self.fontSettings.Rect(display, black, MouseX, MouseY, events)
+                self.fontMakingOf.Rect(display, black, MouseX, MouseY, events)
+                self.fontQuit.Rect(display, black, MouseX, MouseY, events)
+
+            display.Update()
+        GameStateLoop.MainGameLoop()
+
+
+Menu = Menu()
+Settings = Settings()
+HighScores = HighScores()
+Rules = Rules()
+MakingOf = MakingOf()
+
+class GameStateLoop(ABC):
+    @staticmethod
+    def MainGameLoop():
+        gameStateLoop = True
+        while gameStateLoop:
+            if gameState.current == gameState.menu:
+                Menu.GameLoop()
+            elif gameState.current == gameState.fight:
+                Fight()
+            elif gameState.current == gameState.scores:
+                HighScores.GameLoop()
+            elif gameState.current == gameState.rules:
+                Rules.GameLoop()
+            elif gameState.current == gameState.settings:
+                Settings.GameLoop()
+            elif gameState.current == gameState.makingOf:
+                MakingOf.GameLoop()
+        gameStateLoop = False
+
+GameStateLoop = GameStateLoop()
+GameStateLoop.MainGameLoop()

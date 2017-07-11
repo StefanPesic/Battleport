@@ -159,7 +159,7 @@ class Music:
     def __init__(self, volume, audioFile, typePlay):
         self.audiofile = pygame.mixer.music.load(audioFile)
         self.volume = pygame.mixer.music.set_volume(volume)
-        self.typePlay =  typePlay
+        self.typePlay = typePlay
         self.audioLocation = audioFile
     def playSound(self):
         return pygame.mixer.music.play(self.typePlay)
@@ -169,11 +169,8 @@ class Music:
         scroll = 10
         pass
 
-
-# effectSilencer = Music(10, "silencer.wav", 0)
-# effectCannon = Music(70, "cannon.wav", 0)
-# musicPlay = Music(0, "musictheme.wav", 0) #songs are being loaded but not played because volume is 0
-
+menuTheme = Music(10, "Remastered\Sound\Menu\menu_theme.wav", 0)
+menuTheme.playSound()
 
 
 #For the highscores
