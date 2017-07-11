@@ -140,7 +140,7 @@ def Fight():
         if len(playerOneFights) > 0 :
             for i in range(len(playerOneFights)):
                 dummyBoat.GetAttacked(playerOneFights[i], True) #the position of the cannon sprites are updated
-                playerOneFights[i].NormalBlit(70,60) #Loads the cannon sprite
+                playerOneFights[i].NormalBlit(70,60, None) #Loads the cannon sprite
 
         #Player 2 Attacks
         if len(playerTwoAttacks) > 0:  # For the attacks
@@ -152,18 +152,13 @@ def Fight():
         if len(playerTwoFights) > 0:
             for i in range(len(playerTwoFights)):
                 dummyBoat.GetAttacked(playerTwoFights[i], False)
-                playerTwoFights[i].NormalBlit(70,60)
+                playerTwoFights[i].NormalBlit(70,60,None)
 
-        playerOneBoatOne.NormalBlit(None, None) #Blits (shows) the boat
-        playerOneBoatOne.Rect(display,white, 100,100, events, playerTwoFights) #Creates rect around the boat (for collision)
-        playerOneBoatTwo.NormalBlit(None, None)
-        playerOneBoatThree.NormalBlit(None, None)
-        playerOneBoatFour.NormalBlit(None, None)
+        dummyBoat.NormalBlit(None, None, playerOneBoats) # blits the boats to the screen
+        dummyBoat.NormalBlit(None, None, playerTwoBoats)
 
-        playerTwoBoatOne.NormalBlit(None, None)
-        playerTwoBoatTwo.NormalBlit(None, None)
-        playerTwoBoatThree.NormalBlit(None, None)
-        playerTwoBoatFour.NormalBlit(None, None)
+        dummyBoat.Rect(display,white, playerTwoFights, playerOneBoats) #Creates rect around the boats (for collision)
+        dummyBoat.Rect(display, red, playerOneFights, playerTwoBoats)
 
         playerOneScore.reloadText(str(playerOne.score)) #Scoreboard scores get updated
         playerTwoScore.reloadText(str(playerTwo.score))
