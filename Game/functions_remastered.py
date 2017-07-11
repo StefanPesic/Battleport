@@ -2,8 +2,6 @@ import pygame
 import psycopg2
 import sys
 
-''''Functions remastered'''
-
 pygame.init()
 
 #based on the gamestate a certain page will be loaded
@@ -18,6 +16,7 @@ class GameState:
         self.current = self.menu
 gameState = GameState()
 
+#For displaying colours
 class Colour:
     def __init__(self, colourOne, colourTwo, colourThree):
         self.colourOne = colourOne
@@ -32,6 +31,20 @@ black = Colour(0,0,0)
 red = Colour(255,0,0)
 yellow = Colour(255,255,0)
 blue = Colour(0,0,255)
+
+#For playing music
+class Music:
+    def __init__(self, volume, audioFile, typePlay):
+        self.audiofile = pygame.mixer.music.load(audioFile)
+        self.volume = pygame.mixer.music.set_volume(volume)
+        self.typePlay = typePlay
+        self.audioLocation = audioFile
+    def playSound(self):
+        return pygame.mixer.music.play(self.typePlay)
+
+menuTheme = Music(100, "Remastered\Sound\Menu\menu_theme.wav", 0)
+menuTheme.playSound()
+
 
 #Used for the count clock of the scoreboard
 class Clock:
@@ -51,6 +64,7 @@ class Clock:
         else:
             self.changingNumber += 0.01
 
+#The mouse (Hardware device)
 class Mouse:
     def __init__(self):
         self.mouseX = None
@@ -59,7 +73,7 @@ class Mouse:
     def mouseMotion(self):
         (self.mouseX, self.mouseY) = pygame.mouse.get_pos()
 
-#Main Display
+#Main Display screen
 class Display:
     def __init__(self, captiontitle):
         self.screenDetect = pygame.display.Info()
@@ -92,6 +106,7 @@ class ImageLoad(Display):
         self.posX = posX
         self.posY = posY
 
+#For the fonts
 class Font:
     def __init__(self, styleFont, sizeFont, text, colour, name):
         self.fontSet = pygame.font.Font(styleFont, sizeFont)
@@ -144,7 +159,9 @@ class Font:
                 gameState.current = gameState.menu
         elif gameState.current == gameState.settings:
             if self.name == "volume":
-                pass
+                menuTheme.volume = 0
+                print("click")
+
             elif self.name == "resolution":
                 pass
             elif self.name == "back":
@@ -154,24 +171,6 @@ class Font:
         elif gameState.current == gameState.makingOf:
             if self.name == "back":
                 gameState.current = gameState.menu
-
-class Music:
-    def __init__(self, volume, audioFile, typePlay):
-        self.audiofile = pygame.mixer.music.load(audioFile)
-        self.volume = pygame.mixer.music.set_volume(volume)
-        self.typePlay = typePlay
-        self.audioLocation = audioFile
-    def playSound(self):
-        return pygame.mixer.music.play(self.typePlay)
-    def playList(self, musicList, index):
-        return musicList[index].PlaySound()
-    def scroll(self, scroll):
-        scroll = 10
-        pass
-
-menuTheme = Music(10, "Remastered\Sound\Menu\menu_theme.wav", 0)
-menuTheme.playSound()
-
 
 #For the highscores
 class DataBase:
@@ -187,17 +186,17 @@ class Player:
         self.isTurn = turn
         self.score = 0
         self.defeatedBoats = []
-    def ChangePlayerScore(self, boatsList):
+    def ChangePlayerScore(self, boatsList): #Changes player's score based on if a boat is defeated
         for boat in boatsList:
             if boat.defeated == True:
                     boatsList.remove(boat)
                     self.score += 1
                     self.CheckPlayerScore()
-    def CheckPlayerScore(self):
+    def CheckPlayerScore(self): #If the players score is 4, it will go to the main menu
         if(self.score >= 4):
             gameState.current = gameState.menu
 
-#For the boats of the gamed
+#For the boat
 class Boat(ImageLoad):
     def __init__(self, posX, posY, imageFile, isPlayerOne):
         ImageLoad.__init__(self, imageFile= imageFile )
@@ -207,8 +206,6 @@ class Boat(ImageLoad):
         self.positionY = posY
         self.health = 100
         self.isPlayerOne = isPlayerOne #To seperate player 1 and player 2 boats
-
-
     def NormalBlit(self, width, height, boatlist):
         if width == None and height == None: #Width and height are optional
             for i in boatlist:
@@ -216,14 +213,13 @@ class Boat(ImageLoad):
         else:
             newSize = pygame.transform.scale(self.imageLoading, (width, height))
             return self.fullScreen.blit(newSize, (self.positionX, self.positionY))
-
     def activateBoat(self, boatsList, index): #activates one boat, resets others, used to have only one boat move
         for boat in boatsList:
             if boat == boatsList[index]:
                 boat.isActiveBoat = True
             else:
                 boat.isActiveBoat = False
-    def Move(self, boatsList, events, isPlayerOne):
+    def Move(self, boatsList, events, isPlayerOne): #To move the boats
             if isPlayerOne == True:
                 for boat in boatsList:
                     if boat.defeated != True:
@@ -269,9 +265,9 @@ class Boat(ImageLoad):
                     cannonDrawRect = pygame.draw.rect(screenBox.fullScreen, colour.showColour(), (cannon.positionX, cannon.positionY, cannon.imageLoading.get_width() / 5 , cannon.imageLoading.get_height() / 7.5), 1)
                     if(boatRect.colliderect(cannonDrawRect)):
 
-                        boat.health -= 1000
+                        boat.health -= 1
                         cannonList.remove(cannon)
-    def SetDefeat(self, boatList):
+    def SetDefeat(self, boatList): #Checks if a boat is defeated
         for boat in boatList:
             if boat.health <= 0:
                 boat.defeated = True
