@@ -182,7 +182,6 @@ class DataBase:
 #Used to keep track of player score, also the name that the user types in
 class Player:
     def __init__(self, turn):
-        self.name = ""
         self.isTurn = turn
         self.score = 0
         self.defeatedBoats = []
@@ -206,6 +205,8 @@ class Boat(ImageLoad):
         self.positionY = posY
         self.health = 100
         self.isPlayerOne = isPlayerOne #To seperate player 1 and player 2 boats
+        self.YMoveDistance = 2.070 #The distance the player walks in Y
+        self.XMoveDistance = 3 #The distance the player walks in X
     def NormalBlit(self, width, height, boatlist):
         if width == None and height == None: #Width and height are optional
             for i in boatlist:
@@ -225,30 +226,30 @@ class Boat(ImageLoad):
                     if boat.defeated != True:
                         if boat.isActiveBoat == True:
                             if events.key == pygame.K_w:
-                                boat.positionY -= self.imageLoading.get_height() / 2
+                                boat.positionY -= self.imageLoading.get_height() / self.YMoveDistance
                             elif events.key == pygame.K_s:
-                                boat.positionY += self.imageLoading.get_height() /2
+                                boat.positionY += self.imageLoading.get_height() / self.YMoveDistance
                             elif events.key == pygame.K_a:
-                                boat.positionX -= self.imageLoading.get_width() / 3
+                                boat.positionX -= self.imageLoading.get_width() / self.XMoveDistance
                             elif events.key == pygame.K_d:
-                                boat.positionX +=  self.imageLoading.get_width() / 3
+                                boat.positionX +=  self.imageLoading.get_width() / self.XMoveDistance
             else:
                 for boat in boatsList:
                     if boat.defeated != True:
                         if boat.isActiveBoat == True:
                             if events.key == pygame.K_UP:
-                                boat.positionY -= self.imageLoading.get_height() / 2
+                                boat.positionY -= self.imageLoading.get_height() / self.YMoveDistance
                             elif events.key == pygame.K_DOWN:
-                                boat.positionY += self.imageLoading.get_height() /2
+                                boat.positionY += self.imageLoading.get_height() / self.YMoveDistance
                             elif events.key == pygame.K_LEFT:
-                                boat.positionX -= self.imageLoading.get_width() / 3
+                                boat.positionX -= self.imageLoading.get_width() / self.XMoveDistance
                             elif events.key == pygame.K_RIGHT:
-                                boat.positionX += self.imageLoading.get_width() / 3
+                                boat.positionX += self.imageLoading.get_width() / self.XMoveDistance
 
     def Attack(self, boatsList): #When the user clicks the attack button a cannon sprite is returned
         for boat in boatsList:
             if boat.isActiveBoat == True: #looks for the boat that is activated
-                cannon = Boat(boat.positionX, boat.positionY, "Remastered\Images\Fight\Attack\Cannon\cannon.png",
+                cannon = Boat(boat.positionX, boat.positionY + 18, "Remastered\Images\Fight\Attack\Cannon\cannon.png",
                               None)
                 return cannon
     def GetAttacked(self, cannon, isPlayerOne): #Changes position of the cannon sprite
@@ -262,9 +263,8 @@ class Boat(ImageLoad):
                                                                                     boat.imageLoading.get_height()), 1)
             if len(cannonList) > 0:
                 for cannon in cannonList:
-                    cannonDrawRect = pygame.draw.rect(screenBox.fullScreen, colour.showColour(), (cannon.positionX, cannon.positionY, cannon.imageLoading.get_width() / 5 , cannon.imageLoading.get_height() / 7.5), 1)
+                    cannonDrawRect = pygame.draw.rect(screenBox.fullScreen, colour.showColour(), (cannon.positionX, cannon.positionY, cannon.imageLoading.get_width() / 9 , cannon.imageLoading.get_height() / 14), 1)
                     if(boatRect.colliderect(cannonDrawRect)):
-
                         boat.health -= 1
                         cannonList.remove(cannon)
     def SetDefeat(self, boatList): #Checks if a boat is defeated

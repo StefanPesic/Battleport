@@ -8,11 +8,11 @@ from abc import ABC
 #Abstract class that has the abstract methods needed for the pages
 class AbstractMenuPage(ABC):
     __metaclass__ = ABC.__abstractmethods__
-    def BlitImages(self):
+    def PrepareImagesForBlit(self):
         raise NotImplementedError("Abstract method")
-    def BlitFonts(self):
+    def PrepareFontsForBlit(self):
         raise NotImplementedError("Abstract method")
-    def CallObjects(self):
+    def BlitToScreen(self):
         raise NotImplementedError("Abstract method")
     def GameLoop(self):
         raise NotImplementedError("Abstract method")
@@ -20,6 +20,7 @@ class AbstractMenuPage(ABC):
 #The fight page
 class Fight(AbstractMenuPage):
     def __init__(self):
+        self.pygameBuiltInEvents = pygame.event.get()
         self.playerOne = Player(True)  # Player instance to keep track of the score
         self.playerTwo = Player(False)
         self.timer = Clock(60)
@@ -60,7 +61,7 @@ class Fight(AbstractMenuPage):
         self.playerTwoFights = []
         self.playerTwoResult = None
 
-    def BlitImages(self):
+    def PrepareImagesForBlit(self):
         self.dummyBoat.NormalBlit(None, None, self.playerOneBoats)  # blits the boats to the screen
         self.dummyBoat.NormalBlit(None, None, self.playerTwoBoats)
         self.dummyBoat.Rect(display, white, self.playerTwoFights, self.playerOneBoats)  # Creates rect around the boats (for collision)
@@ -74,7 +75,7 @@ class Fight(AbstractMenuPage):
         self.fontHealthPlayerOne.PositionBlit(display, 2, 870)
         self.fontHealthPlayerTwo.PositionBlit(display, 1320, 870)
 
-    def BlitFonts(self):
+    def PrepareFontsForBlit(self):
         self.playerOneScore.reloadText(str(self.playerOne.score))  # Scoreboard scores get updated
         self.playerTwoScore.reloadText(str(self.playerTwo.score))
         self.playerOneScore.PositionBlit(display, 390, 925)
@@ -84,16 +85,16 @@ class Fight(AbstractMenuPage):
         self.secondScoreboard.PositionBlit(display, 857, 877)
         self.minuteScoreboard.PositionBlit(display, 660, 877)
 
-    def MethodCalls(self):
+    def GameChecks(self):
         self.playerOne.ChangePlayerScore(self.playerTwoBoats)
         self.playerTwo.ChangePlayerScore(self.playerOneBoats)
         self.dummyBoat.SetDefeat(self.playerOneBoats)
         self.dummyBoat.SetDefeat(self.playerTwoBoats)
         self.timer.Tick()  # Updates time of the scoreboard
 
-    def CallObjects(self):
-        self.BlitImages()
-        self.BlitFonts()
+    def BlitToScreen(self):
+        self.PrepareImagesForBlit()
+        self.PrepareFontsForBlit()
 
     def PlayerAttacks(self):
         #Player 1 attacks
@@ -106,7 +107,7 @@ class Fight(AbstractMenuPage):
         if len(self.playerOneFights) > 0 :
             for i in range(len(self.playerOneFights)):
                 self.dummyBoat.GetAttacked(self.playerOneFights[i], True) #the position of the cannon sprites are updated
-                self.playerOneFights[i].NormalBlit(70,60, None) #Loads the cannon sprite
+                self.playerOneFights[i].NormalBlit(30,30, None) #Loads the cannon sprite
 
         #Player 2 Attacks
         if len(self.playerTwoAttacks) > 0:  # For the attacks
@@ -118,83 +119,85 @@ class Fight(AbstractMenuPage):
         if len(self.playerTwoFights) > 0:
             for i in range(len(self.playerTwoFights)):
                 self.dummyBoat.GetAttacked(self.playerTwoFights[i], False)
-                self.playerTwoFights[i].NormalBlit(70,60,None)
+                self.playerTwoFights[i].NormalBlit(30,30,None)
+    def GameControls(self, events):
+        if events.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif events.type == pygame.MOUSEBUTTONDOWN:
+            pass
+
+        elif events.type == pygame.MOUSEBUTTONUP:
+            pass
+
+        elif events.type == pygame.MOUSEMOTION:
+            pass
+
+        elif events.type == pygame.KEYDOWN:
+            self.dummyBoat.Move(self.playerOneBoats, events, True)  # Moves boats of player one
+            self.dummyBoat.Move(self.playerTwoBoats, events, False)
+
+            if events.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
+
+                # Player 1 keys
+            elif events.key == pygame.K_w:
+                pass
+
+            elif events.key == pygame.K_s:
+                pass
+            elif events.key == pygame.K_a:
+                pass
+            elif events.key == pygame.K_d:
+                pass
+            elif events.key == pygame.K_1:
+                self.dummyBoat.activateBoat(self.playerOneBoats, 0)  # actives one boat and resets the rest
+                self.fontHealthPlayerOne.reloadText(
+                    "H: " + str(self.playerOneBoatOne.health))  # to update the boat stats on the stats wall
+            elif events.key == pygame.K_2:
+                self.dummyBoat.activateBoat(self.playerOneBoats, 1)
+                self.fontHealthPlayerOne.reloadText("H: " + str(self.playerOneBoatTwo.health))
+            elif events.key == pygame.K_3:
+                self.dummyBoat.activateBoat(self.playerOneBoats, 2)
+                self.fontHealthPlayerOne.reloadText("H: " + str(self.playerOneBoatThree.health))
+            elif events.key == pygame.K_4:
+                self.dummyBoat.activateBoat(self.playerOneBoats, 3)
+                self.fontHealthPlayerOne.reloadText("H: " + str(self.playerOneBoatFour.health))
+            elif events.key == pygame.K_q:  # Attack
+                self.playerOneAttacks.append(self.dummyBoat)
+
+            # Player 2 Keys
+            elif events.key == pygame.K_UP:
+                pass
+            elif events.key == pygame.K_LEFT:
+                pass
+            elif events.key == pygame.K_RIGHT:
+                pass
+            elif events.key == pygame.K_LEFT:
+                pass
+            elif events.key == pygame.K_7:
+                self.dummyBoat.activateBoat(self.playerTwoBoats, 0)
+                self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatOne.health))
+            elif events.key == pygame.K_8:
+                self.dummyBoat.activateBoat(self.playerTwoBoats, 1)
+                self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatTwo.health))
+            elif events.key == pygame.K_9:
+                self.dummyBoat.activateBoat(self.playerTwoBoats, 2)
+                self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatThree.health))
+            elif events.key == pygame.K_0:
+                self.dummyBoat.activateBoat(self.playerTwoBoats, 3)
+                self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatFour.health))
+            elif events.key == pygame.K_RCTRL:  # Attack
+                self.playerTwoAttacks.append(self.dummyBoat)
 
     def GameLoop(self):
         while gameState.current == gameState.fight:  # when gamestate changes, another page is opened
-            self.CallObjects()
+            self.BlitToScreen()
             for events in pygame.event.get():
-                if events.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif events.type == pygame.MOUSEBUTTONDOWN:
-                    pass
-
-                elif events.type == pygame.MOUSEBUTTONUP:
-                    pass
-
-                elif events.type == pygame.MOUSEMOTION:
-                    pass
-
-                elif events.type == pygame.KEYDOWN:
-                    self.dummyBoat.Move(self.playerOneBoats, events, True)  # Moves boats of player one
-                    self.dummyBoat.Move(self.playerTwoBoats, events, False)
-
-                    if events.key == pygame.K_ESCAPE:
-                        pygame.quit()
-                        sys.exit()
-
-                        # Player 1 keys
-                    elif events.key == pygame.K_w:
-                        pass
-
-                    elif events.key == pygame.K_s:
-                        pass
-                    elif events.key == pygame.K_a:
-                        pass
-                    elif events.key == pygame.K_d:
-                        pass
-                    elif events.key == pygame.K_1:
-                        self.dummyBoat.activateBoat(self.playerOneBoats, 0)  # actives one boat and resets the rest
-                        self.fontHealthPlayerOne.reloadText(
-                            "H: " + str(self.playerOneBoatOne.health))  # to update the boat stats on the stats wall
-                    elif events.key == pygame.K_2:
-                        self.dummyBoat.activateBoat(self.playerOneBoats, 1)
-                        self.fontHealthPlayerOne.reloadText("H: " + str(self.playerOneBoatTwo.health))
-                    elif events.key == pygame.K_3:
-                        self.dummyBoat.activateBoat(self.playerOneBoats, 2)
-                        self.fontHealthPlayerOne.reloadText("H: " + str(self.playerOneBoatThree.health))
-                    elif events.key == pygame.K_4:
-                        self.dummyBoat.activateBoat(self.playerOneBoats, 3)
-                        self.fontHealthPlayerOne.reloadText("H: " + str(self.playerOneBoatFour.health))
-                    elif events.key == pygame.K_q:  # Attack
-                        self.playerOneAttacks.append(self.dummyBoat)
-
-                    # Player 2 Keys
-                    elif events.key == pygame.K_UP:
-                        pass
-                    elif events.key == pygame.K_LEFT:
-                        pass
-                    elif events.key == pygame.K_RIGHT:
-                        pass
-                    elif events.key == pygame.K_LEFT:
-                        pass
-                    elif events.key == pygame.K_7:
-                        self.dummyBoat.activateBoat(self.playerTwoBoats, 0)
-                        self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatOne.health))
-                    elif events.key == pygame.K_8:
-                        self.dummyBoat.activateBoat(self.playerTwoBoats, 1)
-                        self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatTwo.health))
-                    elif events.key == pygame.K_9:
-                        self.dummyBoat.activateBoat(self.playerTwoBoats, 2)
-                        self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatThree.health))
-                    elif events.key == pygame.K_0:
-                        self.dummyBoat.activateBoat(self.playerTwoBoats, 3)
-                        self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatFour.health))
-                    elif events.key == pygame.K_RCTRL:  # Attack
-                        self.playerTwoAttacks.append(self.dummyBoat)
+                self.GameControls(events)
             self.PlayerAttacks()
-            self.MethodCalls()
+            self.GameChecks()
             display.Update()
             self.image.FullScreenBlit(display)
         GameStateLoop.MainGameLoop()
@@ -205,16 +208,16 @@ class MakingOf(AbstractMenuPage):
         self.image = ImageLoad("Remastered\Images\Menu\Making_Of\makingOf.jpg")  # Background
         self.fontMakingOf = Font(None, 100, "Making of", blue, "makingOf")
         self.fontBack = Font(None, 100, "Back", red, "back")
-    def BlitImages(self):
+    def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
-    def BlitFonts(self):
+    def PrepareFontsForBlit(self):
         self.fontMakingOf.blit(display, 10)
         self.fontBack.blit(display, 910)
-    def CallObjects(self):
-        self.BlitImages()
-        self.BlitFonts()
+    def BlitToScreen(self):
+        self.PrepareImagesForBlit()
+        self.PrepareFontsForBlit()
     def GameLoop(self):
-        self.CallObjects()
+        self.BlitToScreen()
         while gameState.current == gameState.makingOf:
             for events in pygame.event.get():
                 if events.type == pygame.QUIT:
@@ -244,17 +247,17 @@ class Rules(AbstractMenuPage):
         self.fontRules = Font(None, 100, "Rules and instructions", blue, "rules")
         self.fontForward = Font(None, 100, "Foward", white, "forward")
         self.fontBack = Font(None, 100, "Back", red, "back")
-    def BlitImages(self):
+    def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
-    def BlitFonts(self):
+    def PrepareFontsForBlit(self):
         self.fontRules.blit(display, 10)
         self.fontForward.blit(display, 310)
         self.fontBack.blit(display, 910)
-    def CallObjects(self):
-        self.BlitImages()
-        self.BlitFonts()
+    def BlitToScreen(self):
+        self.PrepareImagesForBlit()
+        self.PrepareFontsForBlit()
     def GameLoop(self):
-        self.CallObjects()
+        self.BlitToScreen()
         while gameState.current == gameState.rules:
             for events in pygame.event.get():
                 if events.type == pygame.QUIT:
@@ -285,18 +288,18 @@ class HighScores(AbstractMenuPage):
         self.fontName = Font(None, 100, "Name", white, "name")
         self.fontScore = Font(None, 100, "Score", white, "score")
         self.fontBack = Font(None, 100, "Back", red, "back")
-    def BlitImages(self):
+    def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
-    def BlitFonts(self):
+    def PrepareFontsForBlit(self):
         self.fontHighScore.blit(display, 10)
         self.fontName.blit(display, 160)
         self.fontScore.blit(display, 310)
         self.fontBack.blit(display, 910)
-    def CallObjects(self):
-        self.BlitImages()
-        self.BlitFonts()
+    def BlitToScreen(self):
+        self.PrepareImagesForBlit()
+        self.PrepareFontsForBlit()
     def GameLoop(self):
-        self.CallObjects()
+        self.BlitToScreen()
         while gameState.current == gameState.scores:
             for events in pygame.event.get():
                 if events.type == pygame.QUIT:
@@ -325,23 +328,23 @@ class Settings(AbstractMenuPage):
         self.fontVolume = Font(None, 100, "Volume", white, "volume")
         self.fontResolution = Font(None, 100, "Resolution", white, "resolution")
         self.fontBack = Font(None, 100, "Back", red, "back")
-    def BlitImages(self):
+    def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
-    def BlitFonts(self):
+    def PrepareFontsForBlit(self):
         self.fontSettings.blit(display, 10)
         self.fontVolume.blit(display, 160)
         self.fontResolution.blit(display, 310)
         self.fontBack.blit(display, 910)
-    def CallObjects(self):
-        self.BlitImages()
-        self.BlitFonts()
+    def BlitToScreen(self):
+        self.PrepareImagesForBlit()
+        self.PrepareFontsForBlit()
     @staticmethod
     def ChangeVolume(musicFile):
         volume = 100
         pygame.mixer.music.set_volume(volume - 10)
 
     def GameLoop(self):
-        self.CallObjects()
+        self.BlitToScreen()
         while gameState.current == gameState.settings:
             for events in pygame.event.get():
                 if events.type == pygame.QUIT:
@@ -379,9 +382,9 @@ class Menu(AbstractMenuPage):
         self.fontSettings = Font(None, 100, "Settings", white, "settings")
         self.fontMakingOf = Font(None, 100, "Making of", white, "making")
         self.fontQuit = Font(None, 100, "Quit", red, "quit")
-    def BlitImages(self):
+    def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
-    def BlitFonts(self):
+    def PrepareFontsForBlit(self):
         self.fontWelcome.blit(display, 10)
         self.fontFight.blit(display, 160)
         self.fontRules.blit(display, 310)
@@ -390,11 +393,11 @@ class Menu(AbstractMenuPage):
         self.fontSettings.blit(display, 610)
         self.fontMakingOf.blit(display, 760)
         self.fontQuit.blit(display, 910)
-    def CallObjects(self):
-        self.BlitImages()
-        self.BlitFonts()
+    def BlitToScreen(self):
+        self.PrepareImagesForBlit()
+        self.PrepareFontsForBlit()
     def GameLoop(self):
-        self.CallObjects()
+        self.BlitToScreen()
         while gameState.current == gameState.menu:
             for events in pygame.event.get():
                 if events.type == pygame.QUIT:
