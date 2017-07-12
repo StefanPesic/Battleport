@@ -5,4 +5,4 @@ This game is made by 4 students. It is a game that features battleships and the 
 
 The game is playable but not complete, but it will be remastered.
 
-Feel free to run it with the file: "TheMenu.py"
+Feel free to run it with the file: "TheMenu_remastered.py"
