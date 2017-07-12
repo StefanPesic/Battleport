@@ -91,6 +91,8 @@ class Fight(AbstractMenuPage):
         self.dummyBoat.SetDefeat(self.playerOneBoats)
         self.dummyBoat.SetDefeat(self.playerTwoBoats)
         self.timer.Tick()  # Updates time of the scoreboard
+        self.PlayerAttacks()
+
 
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
@@ -193,13 +195,14 @@ class Fight(AbstractMenuPage):
 
     def GameLoop(self):
         while gameState.current == gameState.fight:  # when gamestate changes, another page is opened
-            self.BlitToScreen()
             for events in pygame.event.get():
                 self.GameControls(events)
-            self.PlayerAttacks()
+
             self.GameChecks()
             display.Update()
             self.image.FullScreenBlit(display)
+            self.BlitToScreen()
+
         GameStateLoop.MainGameLoop()
 
 #The making of page

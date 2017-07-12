@@ -63,7 +63,6 @@ class Clock:
             self.changingNumber = 0
         else:
             self.changingNumber += 0.01
-
 #The mouse (Hardware device)
 class Mouse:
     def __init__(self):
@@ -225,26 +224,28 @@ class Boat(ImageLoad):
                 for boat in boatsList:
                     if boat.defeated != True:
                         if boat.isActiveBoat == True:
-                            if events.key == pygame.K_w:
-                                boat.positionY -= self.imageLoading.get_height() / self.YMoveDistance
-                            elif events.key == pygame.K_s:
-                                boat.positionY += self.imageLoading.get_height() / self.YMoveDistance
-                            elif events.key == pygame.K_a:
-                                boat.positionX -= self.imageLoading.get_width() / self.XMoveDistance
-                            elif events.key == pygame.K_d:
-                                boat.positionX +=  self.imageLoading.get_width() / self.XMoveDistance
+                            if self.IsOutOfBoundary(boatsList) != True:
+                                if events.key == pygame.K_w:
+                                    boat.positionY -= self.imageLoading.get_height() / self.YMoveDistance
+                                elif events.key == pygame.K_s:
+                                    boat.positionY += self.imageLoading.get_height() / self.YMoveDistance
+                                elif events.key == pygame.K_a:
+                                    boat.positionX -= self.imageLoading.get_width() / self.XMoveDistance
+                                elif events.key == pygame.K_d:
+                                    boat.positionX +=  self.imageLoading.get_width() / self.XMoveDistance
             else:
                 for boat in boatsList:
                     if boat.defeated != True:
                         if boat.isActiveBoat == True:
-                            if events.key == pygame.K_UP:
-                                boat.positionY -= self.imageLoading.get_height() / self.YMoveDistance
-                            elif events.key == pygame.K_DOWN:
-                                boat.positionY += self.imageLoading.get_height() / self.YMoveDistance
-                            elif events.key == pygame.K_LEFT:
-                                boat.positionX -= self.imageLoading.get_width() / self.XMoveDistance
-                            elif events.key == pygame.K_RIGHT:
-                                boat.positionX += self.imageLoading.get_width() / self.XMoveDistance
+                            if self.IsOutOfBoundary(boatsList) != True:
+                                if events.key == pygame.K_UP:
+                                    boat.positionY -= self.imageLoading.get_height() / self.YMoveDistance
+                                elif events.key == pygame.K_DOWN:
+                                    boat.positionY += self.imageLoading.get_height() / self.YMoveDistance
+                                elif events.key == pygame.K_LEFT:
+                                    boat.positionX -= self.imageLoading.get_width() / self.XMoveDistance
+                                elif events.key == pygame.K_RIGHT:
+                                    boat.positionX += self.imageLoading.get_width() / self.XMoveDistance
 
     def Attack(self, boatsList): #When the user clicks the attack button a cannon sprite is returned
         for boat in boatsList:
@@ -272,3 +273,13 @@ class Boat(ImageLoad):
             if boat.health <= 0:
                 boat.defeated = True
         return True
+    def IsOutOfBoundary(self, boatList): # Checks if a boat is outside of an boundary #TODO change it
+        for boat in boatList:
+            if boat.positionX + boat.imageLoading.get_width() > display.screenDetect.current_w:
+                boat.positionX -= (self.XMoveDistance + 100)
+            elif boat.positionX < display.screenDetect.current_w - display.screenDetect.current_w:
+                boat.positionX += (self.XMoveDistance + 100)
+            elif boat.positionY + boat.imageLoading.get_height() > display.screenDetect.current_h:
+                boat.positionY -= (self.YMoveDistance + 100)
+            elif boat.positionY + boat.imageLoading.get_height() < display.screenDetect.current_h - display.screenDetect.current_h:
+                boat.positionY += (self.YMoveDistance + 150)
