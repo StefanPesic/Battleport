@@ -1,5 +1,4 @@
 from functions_remastered import *
-import psycopg2
 import sys
 from abc import ABC
 
@@ -378,7 +377,7 @@ class Settings(AbstractMenuPage):
 class Menu(AbstractMenuPage):
     def __init__(self):
         self.image = ImageLoad("Remastered\Images\Menu\Main_Menu\menu.jpg")
-        self.fontWelcome = Font(None, 100, "Welcome to Battleport", blue, "welcomeTitle")
+        self.fontWelcome = Font(None, 100, "Welcome to Battleport", red, "welcomeTitle")
         self.fontFight = Font(None, 100, "Fight", white, "fight")
         self.fontRules = Font(None, 100, "Rules and instructions", white, "rules")
         self.fontScores = Font(None, 100, "High Scores", white, "scores")
@@ -388,14 +387,13 @@ class Menu(AbstractMenuPage):
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontWelcome.blit(display, 10)
-        self.fontFight.blit(display, 160)
-        self.fontRules.blit(display, 310)
-        self.fontScores.blit(display, 460)
-        self.fontSettings.blit(display, 610)
-        self.fontSettings.blit(display, 610)
-        self.fontMakingOf.blit(display, 760)
-        self.fontQuit.blit(display, 910)
+        self.fontWelcome.blit(display, 30, FontEnum.GetTop())
+        self.fontFight.blit(display, 5, FontEnum.GetTop())
+        self.fontRules.blit(display, 3.5, FontEnum.GetCenter())
+        self.fontScores.blit(display, 2.5, FontEnum.GetCenter())
+        self.fontSettings.blit(display, 2, FontEnum.GetCenter())
+        self.fontMakingOf.blit(display, 10, FontEnum.GetDown())
+        self.fontQuit.blit(display, 5, FontEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()

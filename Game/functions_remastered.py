@@ -16,6 +16,8 @@ class GameState:
         self.current = self.menu
 gameState = GameState()
 
+
+
 #For displaying colours
 class Colour:
     def __init__(self, colourOne, colourTwo, colourThree):
@@ -105,6 +107,19 @@ class ImageLoad(Display):
         self.posX = posX
         self.posY = posY
 
+#To set position options
+class FontEnum:
+    Top, Center, Down = range(0,3)
+    @staticmethod
+    def GetTop():
+        return FontEnum.Top
+    @staticmethod
+    def GetCenter():
+        return FontEnum.Center
+    @staticmethod
+    def GetDown():
+        return FontEnum.Down
+
 #For the fonts
 class Font:
     def __init__(self, styleFont, sizeFont, text, colour, name):
@@ -114,11 +129,19 @@ class Font:
         self.positionY = None
         self.name = name
         self.colour = colour
-    def blit(self, screenBox, posY): #Mainly used for menu fonts (it centres)
-        blit = screenBox.fullScreen.blit(self.fontRender,((screenBox.screenDetect.current_w / 2) - (self.fontRender.get_width() / 2),  posY))
+    def blit(self, screenBox, posY, screenPosition): #Mainly used for menu fonts (it centres)
+        if screenPosition is FontEnum.Top or screenPosition is FontEnum.Center:
+            blit = screenBox.fullScreen.blit(self.fontRender, (
+            (screenBox.screenDetect.current_w / 2) - (self.fontRender.get_width() / 2),
+            screenBox.screenDetect.current_h / posY))
+        elif screenPosition is FontEnum.Down:
+            blit = screenBox.fullScreen.blit(self.fontRender, (
+            (screenBox.screenDetect.current_w / 2) - (self.fontRender.get_width() / 2),screenBox.screenDetect.current_h / 2 + screenBox.screenDetect.current_h / posY))
+
         self.positionX = blit[0]
         self.positionY = posY
         return blit
+
     def PositionBlit(self, screenBox, posX, posY): #For specific fotns
         self.positionY = posX
         self.positionY = posY
