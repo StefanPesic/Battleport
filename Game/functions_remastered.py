@@ -13,7 +13,7 @@ class GameState:
         self.scores = "scores"
         self.settings = "settings"
         self.makingOf = "makingOf"
-        self.current = self.menu
+        self.current = self.menu #TODO change this to make the game work
 gameState = GameState()
 
 
@@ -120,6 +120,7 @@ class FontEnum:
     def GetDown():
         return FontEnum.Down
 
+#TODO scale font
 #For the fonts
 class Font:
     def __init__(self, styleFont, sizeFont, text, colour, name):
@@ -137,10 +138,8 @@ class Font:
         elif screenPosition is FontEnum.Down:
             blit = screenBox.fullScreen.blit(self.fontRender, (
             (screenBox.screenDetect.current_w / 2) - (self.fontRender.get_width() / 2),screenBox.screenDetect.current_h / 2 + screenBox.screenDetect.current_h / posY))
-
         self.positionX = blit[0]
-        self.positionY = posY
-        return blit
+        self.positionY = blit[1]
 
     def PositionBlit(self, screenBox, posX, posY): #For specific fotns
         self.positionY = posX

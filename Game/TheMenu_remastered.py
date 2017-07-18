@@ -209,12 +209,12 @@ class MakingOf(AbstractMenuPage):
     def __init__(self):
         self.image = ImageLoad("Remastered\Images\Menu\Making_Of\makingOf.jpg")  # Background
         self.fontMakingOf = Font(None, 100, "Making of", blue, "makingOf")
-        self.fontBack = Font(None, 100, "Back", red, "back")
+        self.fontBack = Font(None, 80, "Back", red, "back")
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontMakingOf.blit(display, 10)
-        self.fontBack.blit(display, 910)
+        self.fontMakingOf.blit(display, 30, FontEnum.GetTop())
+        self.fontBack.blit(display, 5, FontEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()
@@ -247,14 +247,14 @@ class Rules(AbstractMenuPage):
     def __init__(self):
         self.image = ImageLoad("Remastered\Images\Menu\Rules\gameRules.jpg")
         self.fontRules = Font(None, 100, "Rules and instructions", blue, "rules")
-        self.fontForward = Font(None, 100, "Foward", white, "forward")
-        self.fontBack = Font(None, 100, "Back", red, "back")
+        self.fontForward = Font(None, 80, "Foward", white, "forward")
+        self.fontBack = Font(None, 80, "Back", red, "back")
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontRules.blit(display, 10)
-        self.fontForward.blit(display, 310)
-        self.fontBack.blit(display, 910)
+        self.fontRules.blit(display, 30, FontEnum.GetTop())
+        self.fontForward.blit(display, 5, FontEnum.GetTop())
+        self.fontBack.blit(display, 5, FontEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()
@@ -287,16 +287,16 @@ class HighScores(AbstractMenuPage):
     def __init__(self):
         self.image = ImageLoad("Remastered\Images\Menu\High_Scores\highscores.jpg")
         self.fontHighScore = Font(None, 100, "High Scores", blue, "highScoreTitle")
-        self.fontName = Font(None, 100, "Name", white, "name")
-        self.fontScore = Font(None, 100, "Score", white, "score")
-        self.fontBack = Font(None, 100, "Back", red, "back")
+        self.fontName = Font(None, 80, "Name", white, "name")
+        self.fontScore = Font(None, 80, "Score", white, "score")
+        self.fontBack = Font(None, 80, "Back", red, "back")
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontHighScore.blit(display, 10)
-        self.fontName.blit(display, 160)
-        self.fontScore.blit(display, 310)
-        self.fontBack.blit(display, 910)
+        self.fontHighScore.blit(display, 30, FontEnum.GetTop())
+        self.fontName.blit(display, 5, FontEnum.GetTop())
+        self.fontScore.blit(display, 3.5, FontEnum.GetTop())
+        self.fontBack.blit(display, 5, FontEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()
@@ -327,16 +327,16 @@ class Settings(AbstractMenuPage):
     def __init__(self):
         self.image = ImageLoad("Remastered\Images\Menu\Settings\settings.jpg")
         self.fontSettings = Font(None, 100, "Settings", blue, "settingsTitle")
-        self.fontVolume = Font(None, 100, "Volume", white, "volume")
-        self.fontResolution = Font(None, 100, "Resolution", white, "resolution")
-        self.fontBack = Font(None, 100, "Back", red, "back")
+        self.fontVolume = Font(None, 80, "Volume", white, "volume")
+        self.fontResolution = Font(None, 80, "Resolution", white, "resolution")
+        self.fontBack = Font(None, 80, "Back", red, "back")
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontSettings.blit(display, 10)
-        self.fontVolume.blit(display, 160)
-        self.fontResolution.blit(display, 310)
-        self.fontBack.blit(display, 910)
+        self.fontSettings.blit(display, 30, FontEnum.GetTop())
+        self.fontVolume.blit(display, 5,  FontEnum.GetTop())
+        self.fontResolution.blit(display, 3.5,  FontEnum.GetTop())
+        self.fontBack.blit(display, 5,  FontEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()
@@ -377,13 +377,13 @@ class Settings(AbstractMenuPage):
 class Menu(AbstractMenuPage):
     def __init__(self):
         self.image = ImageLoad("Remastered\Images\Menu\Main_Menu\menu.jpg")
-        self.fontWelcome = Font(None, 100, "Welcome to Battleport", red, "welcomeTitle")
-        self.fontFight = Font(None, 100, "Fight", white, "fight")
-        self.fontRules = Font(None, 100, "Rules and instructions", white, "rules")
-        self.fontScores = Font(None, 100, "High Scores", white, "scores")
-        self.fontSettings = Font(None, 100, "Settings", white, "settings")
-        self.fontMakingOf = Font(None, 100, "Making of", white, "making")
-        self.fontQuit = Font(None, 100, "Quit", red, "quit")
+        self.fontWelcome = Font(None, 100, "Battleport", blue, "welcomeTitle")
+        self.fontFight = Font(None, 80, "Fight", white, "fight")
+        self.fontRules = Font(None, 80, "Rules and instructions", white, "rules")
+        self.fontScores = Font(None, 80, "High Scores", white, "scores")
+        self.fontSettings = Font(None, 80, "Settings", white, "settings")
+        self.fontMakingOf = Font(None, 80, "Making of", white, "making")
+        self.fontQuit = Font(None, 80, "Quit", red, "quit")
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
@@ -418,12 +418,12 @@ class Menu(AbstractMenuPage):
                         pygame.quit()
                         sys.exit()
                 (MouseX, MouseY) = pygame.mouse.get_pos()
-                self.fontFight.Rect(display, black, MouseX, MouseY, events)
-                self.fontRules.Rect(display, black, MouseX, MouseY, events)
-                self.fontScores.Rect(display, black, MouseX, MouseY, events)
-                self.fontSettings.Rect(display, black, MouseX, MouseY, events)
-                self.fontMakingOf.Rect(display, black, MouseX, MouseY, events)
-                self.fontQuit.Rect(display, black, MouseX, MouseY, events)
+                self.fontFight.Rect(display, red, MouseX, MouseY, events)
+                self.fontRules.Rect(display, red, MouseX, MouseY, events)
+                self.fontScores.Rect(display, red, MouseX, MouseY, events)
+                self.fontSettings.Rect(display, red, MouseX, MouseY, events)
+                self.fontMakingOf.Rect(display, red, MouseX, MouseY, events)
+                self.fontQuit.Rect(display, red, MouseX, MouseY, events)
 
             display.Update()
         GameStateLoop.MainGameLoop()
