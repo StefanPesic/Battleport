@@ -66,10 +66,10 @@ class Fight(AbstractMenuPage):
         self.dummyBoat.Rect(display, white, self.playerTwoFights, self.playerOneBoats)  # Creates rect around the boats (for collision)
         self.dummyBoat.Rect(display, red, self.playerOneFights, self.playerTwoBoats)
 
-        self.scoreboard.NormalBlit(self.scoreboard.screenDetect.current_w / 2 - self.scoreboard.imageLoading.get_width() / 2, 860,
+        self.scoreboard.NormalBlit(self.scoreboard.screenDetect.current_w / 2 - self.scoreboard.imageLoading.get_width() / 2, 700,
                               None, None)
-        self.playerOneStatsBoard.NormalBlit(0, 870, 360, 180)
-        self.playerTwoStatsBoard.NormalBlit(1320, 870, 360, 180)
+        self.playerOneStatsBoard.NormalBlit(0, 720, 360, 180)
+        self.playerTwoStatsBoard.NormalBlit(1240, 720, 360, 180)
 
         self.fontHealthPlayerOne.PositionBlit(display, 2, 870)
         self.fontHealthPlayerTwo.PositionBlit(display, 1320, 870)
@@ -165,7 +165,8 @@ class Fight(AbstractMenuPage):
             elif events.key == pygame.K_4:
                 self.dummyBoat.activateBoat(self.playerOneBoats, 3)
                 self.fontHealthPlayerOne.reloadText("H: " + str(self.playerOneBoatFour.health))
-            elif events.key == pygame.K_q:  # Attack
+            elif events.key == pygame.K_q and self.dummyBoat.IsOneBoatActive(self.playerOneBoats):
+                # Attack
                 self.playerOneAttacks.append(self.dummyBoat)
 
             # Player 2 Keys
@@ -189,56 +190,16 @@ class Fight(AbstractMenuPage):
             elif events.key == pygame.K_0:
                 self.dummyBoat.activateBoat(self.playerTwoBoats, 3)
                 self.fontHealthPlayerTwo.reloadText("H: " + str(self.playerTwoBoatFour.health))
-            elif events.key == pygame.K_RCTRL:  # Attack
+            elif events.key == pygame.K_RCTRL and self.dummyBoat.IsOneBoatActive(self.playerTwoBoats):  # Attack
                 self.playerTwoAttacks.append(self.dummyBoat)
 
     def GameLoop(self):
         while gameState.current == gameState.fight:  # when gamestate changes, another page is opened
-            for events in pygame.event.get():
-                self.GameControls(events)
-
-            self.GameChecks()
-            display.Update()
             self.image.FullScreenBlit(display)
             self.BlitToScreen()
-
-        GameStateLoop.MainGameLoop()
-
-#The making of page
-class MakingOf(AbstractMenuPage):
-    def __init__(self):
-        self.image = ImageLoad("Remastered\Images\Menu\Making_Of\makingOf.jpg")  # Background
-        self.fontMakingOf = Font(None, 100, "Making of", blue, "makingOf")
-        self.fontBack = Font(None, 80, "Back", red, "back")
-    def PrepareImagesForBlit(self):
-        self.image.FullScreenBlit(display)
-    def PrepareFontsForBlit(self):
-        self.fontMakingOf.blit(display, 30, FontEnum.GetTop())
-        self.fontBack.blit(display, 5, FontEnum.GetDown())
-    def BlitToScreen(self):
-        self.PrepareImagesForBlit()
-        self.PrepareFontsForBlit()
-    def GameLoop(self):
-        self.BlitToScreen()
-        while gameState.current == gameState.makingOf:
+            self.GameChecks()
             for events in pygame.event.get():
-                if events.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif events.type == pygame.MOUSEBUTTONDOWN:
-                    pass
-
-                elif events.type == pygame.MOUSEBUTTONUP:
-                    pass
-
-                elif events.type == pygame.MOUSEMOTION:
-                    pass
-                elif events.type == pygame.KEYDOWN:
-                    if events.key == pygame.K_ESCAPE:
-                        pygame.quit()
-                        sys.exit()
-                (MouseX, MouseY) = pygame.mouse.get_pos()
-                self.fontBack.Rect(display, black, MouseX, MouseY, events)  # Makes the font clickable
+                self.GameControls(events)
             display.Update()
         GameStateLoop.MainGameLoop()
 
@@ -252,9 +213,9 @@ class Rules(AbstractMenuPage):
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontRules.blit(display, 30, FontEnum.GetTop())
-        self.fontForward.blit(display, 5, FontEnum.GetTop())
-        self.fontBack.blit(display, 5, FontEnum.GetDown())
+        self.fontRules.blit(display, 30, FontAllignmentEnum.GetTop())
+        self.fontForward.blit(display, 5, FontAllignmentEnum.GetTop())
+        self.fontBack.blit(display, 5, FontAllignmentEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()
@@ -293,10 +254,10 @@ class HighScores(AbstractMenuPage):
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontHighScore.blit(display, 30, FontEnum.GetTop())
-        self.fontName.blit(display, 5, FontEnum.GetTop())
-        self.fontScore.blit(display, 3.5, FontEnum.GetTop())
-        self.fontBack.blit(display, 5, FontEnum.GetDown())
+        self.fontHighScore.blit(display, 30, FontAllignmentEnum.GetTop())
+        self.fontName.blit(display, 5, FontAllignmentEnum.GetTop())
+        self.fontScore.blit(display, 3.5, FontAllignmentEnum.GetTop())
+        self.fontBack.blit(display, 5, FontAllignmentEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()
@@ -333,10 +294,10 @@ class Settings(AbstractMenuPage):
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontSettings.blit(display, 30, FontEnum.GetTop())
-        self.fontVolume.blit(display, 5,  FontEnum.GetTop())
-        self.fontResolution.blit(display, 3.5,  FontEnum.GetTop())
-        self.fontBack.blit(display, 5,  FontEnum.GetDown())
+        self.fontSettings.blit(display, 30, FontAllignmentEnum.GetTop())
+        self.fontVolume.blit(display, 5, FontAllignmentEnum.GetTop())
+        self.fontResolution.blit(display, 3.5, FontAllignmentEnum.GetTop())
+        self.fontBack.blit(display, 5, FontAllignmentEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()
@@ -369,7 +330,6 @@ class Settings(AbstractMenuPage):
                 self.fontVolume.Rect(display, black, MouseX, MouseY, events)
                 self.fontResolution.Rect(display, black, MouseX, MouseY, events)
                 self.fontBack.Rect(display, black, MouseX, MouseY, events)
-
             display.Update()
         GameStateLoop.MainGameLoop()
 
@@ -382,18 +342,16 @@ class Menu(AbstractMenuPage):
         self.fontRules = Font(None, 80, "Rules and instructions", white, "rules")
         self.fontScores = Font(None, 80, "High Scores", white, "scores")
         self.fontSettings = Font(None, 80, "Settings", white, "settings")
-        self.fontMakingOf = Font(None, 80, "Making of", white, "making")
         self.fontQuit = Font(None, 80, "Quit", red, "quit")
     def PrepareImagesForBlit(self):
         self.image.FullScreenBlit(display)
     def PrepareFontsForBlit(self):
-        self.fontWelcome.blit(display, 30, FontEnum.GetTop())
-        self.fontFight.blit(display, 5, FontEnum.GetTop())
-        self.fontRules.blit(display, 3.5, FontEnum.GetCenter())
-        self.fontScores.blit(display, 2.5, FontEnum.GetCenter())
-        self.fontSettings.blit(display, 2, FontEnum.GetCenter())
-        self.fontMakingOf.blit(display, 10, FontEnum.GetDown())
-        self.fontQuit.blit(display, 5, FontEnum.GetDown())
+        self.fontWelcome.blit(display, 30, FontAllignmentEnum.GetTop())
+        self.fontFight.blit(display, 5, FontAllignmentEnum.GetTop())
+        self.fontRules.blit(display, 3.5, FontAllignmentEnum.GetTop())
+        self.fontScores.blit(display, 2.5, FontAllignmentEnum.GetTop())
+        self.fontSettings.blit(display, 2, FontAllignmentEnum.GetTop())
+        self.fontQuit.blit(display, 5, FontAllignmentEnum.GetDown())
     def BlitToScreen(self):
         self.PrepareImagesForBlit()
         self.PrepareFontsForBlit()
@@ -422,7 +380,6 @@ class Menu(AbstractMenuPage):
                 self.fontRules.Rect(display, red, MouseX, MouseY, events)
                 self.fontScores.Rect(display, red, MouseX, MouseY, events)
                 self.fontSettings.Rect(display, red, MouseX, MouseY, events)
-                self.fontMakingOf.Rect(display, red, MouseX, MouseY, events)
                 self.fontQuit.Rect(display, red, MouseX, MouseY, events)
 
             display.Update()
@@ -433,7 +390,6 @@ Menu = Menu()
 Settings = Settings()
 HighScores = HighScores()
 Rules = Rules()
-MakingOf = MakingOf()
 Fight = Fight()
 
 #Has the main gameloop
@@ -452,8 +408,6 @@ class GameStateLoop(ABC):
                 Rules.GameLoop()
             elif gameState.current == gameState.settings:
                 Settings.GameLoop()
-            elif gameState.current == gameState.makingOf:
-                MakingOf.GameLoop()
         gameStateLoop = False
 
 GameStateLoop = GameStateLoop()

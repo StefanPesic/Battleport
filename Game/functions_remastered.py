@@ -1,6 +1,8 @@
 import pygame
 import psycopg2
 import sys
+import numpy
+
 
 pygame.init()
 
@@ -12,7 +14,6 @@ class GameState:
         self.rules = "rules"
         self.scores = "scores"
         self.settings = "settings"
-        self.makingOf = "makingOf"
         self.current = self.menu #TODO change this to make the game work
 gameState = GameState()
 
@@ -38,13 +39,23 @@ blue = Colour(0,0,255)
 class Music:
     def __init__(self, volume, audioFile, typePlay):
         self.audiofile = pygame.mixer.music.load(audioFile)
-        self.volume = pygame.mixer.music.set_volume(volume)
         self.typePlay = typePlay
         self.audioLocation = audioFile
+        self.volume = volume
+        pygame.mixer.music.set_volume(volume)
+
     def playSound(self):
         return pygame.mixer.music.play(self.typePlay)
+    def ChangeVolume(self, mouseEvent):
+        leftMouse = 1
+        volumeChangeLevel = 0.1     
+        if mouseEvent.button == leftMouse:
+            self.volume += volumeChangeLevel
+        else:
+            self.volume -= volumeChangeLevel
+        pygame.mixer.music.set_volume(self.volume)
 
-menuTheme = Music(100, "Remastered\Sound\Menu\menu_theme.wav", 0)
+menuTheme = Music(1.0, "Remastered\Sound\Menu\menu_theme.wav", 0)
 menuTheme.playSound()
 
 
@@ -74,6 +85,30 @@ class Mouse:
     def mouseMotion(self):
         (self.mouseX, self.mouseY) = pygame.mouse.get_pos()
 
+#For the screen resolutions
+class ScreenResolutionEnum:
+    def __init__(self):
+        resolutionOne = [1920, 1680]
+        resolutionTwo = [1366, 768]
+        resolutionThree = [1280, 1024]
+        resolutionFour = [1280, 800]
+        resolutionFive = [1024, 768]
+        self.resolutions = []
+        self.resolutions.append(resolutionOne)
+        self.resolutions.append(resolutionTwo)
+        self.resolutions.append(resolutionThree)
+        self.resolutions.append(resolutionFour)
+        self.resolutions.append(resolutionFive)
+    def GiveResolution(self):
+        index = -1
+        if index >= len(self.resolutions) - 1:
+            index = -1
+        else:
+            index += 1
+            return self.resolutions[index]
+
+ScreenResolutionEnum = ScreenResolutionEnum()
+
 #Main Display screen
 class Display:
     def __init__(self, captiontitle):
@@ -81,8 +116,24 @@ class Display:
         self.caption = pygame.display.set_caption(captiontitle)
         self.fullScreen =  pygame.display.set_mode((self.screenDetect.current_w, self.screenDetect.current_h), pygame.FULLSCREEN)
     def Update(self):
-        return pygame.display.update()
+        pygame.display.update()
+    def ChangeResolution(self):
+        #TODO 
+        currentResultion = ScreenResolutionEnum.GiveResolution()
+        self.fullScreen = pygame.display.set_mode((1300, 600), pygame.FULLSCREEN)
+
 display = Display("Fullscreen")
+
+#To set position options
+class FontAllignmentEnum:
+    Top, Down = range(0,2)
+    @staticmethod
+    def GetTop():
+        return FontAllignmentEnum.Top
+    @staticmethod
+    def GetDown():
+        return FontAllignmentEnum.Down
+
 
 #For the images
 class ImageLoad(Display):
@@ -101,24 +152,13 @@ class ImageLoad(Display):
         if width == None and height == None: #It is optional to give width and height
             return self.fullScreen.blit(self.imageLoading, (self.posX,self.posY))
         else:
-            newSize = pygame.transform.scale(self.imageLoading, (width, height)) #changes size of image
-            return self.fullScreen.blit(newSize, (posX, posY))
+            scaledImageSize = pygame.transform.scale(self.imageLoading, (width, height)) #changes size of image
+            return self.fullScreen.blit(scaledImageSize, (posX,posY, 1600, 900))
     def setPositions(self, posX, posY): #Sets new position for the image
         self.posX = posX
         self.posY = posY
 
-#To set position options
-class FontEnum:
-    Top, Center, Down = range(0,3)
-    @staticmethod
-    def GetTop():
-        return FontEnum.Top
-    @staticmethod
-    def GetCenter():
-        return FontEnum.Center
-    @staticmethod
-    def GetDown():
-        return FontEnum.Down
+
 
 #TODO scale font
 #For the fonts
@@ -131,11 +171,11 @@ class Font:
         self.name = name
         self.colour = colour
     def blit(self, screenBox, posY, screenPosition): #Mainly used for menu fonts (it centres)
-        if screenPosition is FontEnum.Top or screenPosition is FontEnum.Center:
+        if screenPosition is FontAllignmentEnum.Top:
             blit = screenBox.fullScreen.blit(self.fontRender, (
             (screenBox.screenDetect.current_w / 2) - (self.fontRender.get_width() / 2),
             screenBox.screenDetect.current_h / posY))
-        elif screenPosition is FontEnum.Down:
+        elif screenPosition is FontAllignmentEnum.Down:
             blit = screenBox.fullScreen.blit(self.fontRender, (
             (screenBox.screenDetect.current_w / 2) - (self.fontRender.get_width() / 2),screenBox.screenDetect.current_h / 2 + screenBox.screenDetect.current_h / posY))
         self.positionX = blit[0]
@@ -148,10 +188,10 @@ class Font:
     def Rect(self, screenBox, colour, mouseX, mouseY, events): #Makes the font clickable
         rect = pygame.draw.rect(screenBox.fullScreen, colour.showColour(), (self.positionX, self.positionY, self.fontRender.get_width(), self.fontRender.get_height()), 1)
         if rect.collidepoint(mouseX, mouseY) and events.type == pygame.MOUSEBUTTONDOWN:
-            self.changeGameState()
+            self.changeGameState(events)
     def reloadText(self, text): #To have the font update in the pygame loop (example: to update scores)
         self.fontRender = self.fontSet.render(str(text), 5, self.colour.showColour())
-    def changeGameState(self): #The gamestate of the game changes, and depending on the state, a page will be loaded
+    def changeGameState(self, mouseEvent): #The gamestate of the game changes, and depending on the state, a page will be loaded
         if self.name == "fight":
             gameState.current = gameState.fight
         elif self.name == "rules":
@@ -160,38 +200,31 @@ class Font:
             gameState.current = gameState.scores
         elif self.name == "settings":
             gameState.current = gameState.settings
-        elif self.name == "making":
-            gameState.current = gameState.makingOf
         elif self.name == "quit":
             pygame.quit()
             sys.exit()
         else:
-            self.ButtonFunctionality()
+            self.ButtonFunctionality(mouseEvent)
 
-    def ButtonFunctionality(self): #For the buttons of each page
+    def ButtonFunctionality(self, mouseEvent): #For the buttons of each page
         if gameState.current == gameState.fight:
             pass
         elif gameState.current == gameState.rules:
             if self.name == "back":
                 gameState.current = gameState.menu
-
         elif gameState.current == gameState.scores:
             if self.name == "back":
                 gameState.current = gameState.menu
         elif gameState.current == gameState.settings:
             if self.name == "volume":
-                menuTheme.volume = 0
-                print("click")
-
+                menuTheme.ChangeVolume(mouseEvent)
             elif self.name == "resolution":
+                display.ChangeResolution()
                 pass
             elif self.name == "back":
                 gameState.current = gameState.menu
             else:
                 pass
-        elif gameState.current == gameState.makingOf:
-            if self.name == "back":
-                gameState.current = gameState.menu
 
 #For the highscores
 class DataBase:
@@ -230,8 +263,8 @@ class Boat(ImageLoad):
         self.XMoveDistance = 3 #The distance the player walks in X
     def NormalBlit(self, width, height, boatlist):
         if width == None and height == None: #Width and height are optional
-            for i in boatlist:
-                i.fullScreen.blit(i.imageLoading, (i.positionX, i.positionY))
+            for boat in boatlist:
+                boat.fullScreen.blit(boat.imageLoading, (boat.positionX, boat.positionY))
         else:
             newSize = pygame.transform.scale(self.imageLoading, (width, height))
             return self.fullScreen.blit(newSize, (self.positionX, self.positionY))
@@ -241,6 +274,10 @@ class Boat(ImageLoad):
                 boat.isActiveBoat = True
             else:
                 boat.isActiveBoat = False
+    def IsOneBoatActive(self, boatList):
+        for boat in boatList:
+            if boat.isActiveBoat == True:
+                return True
     def Move(self, boatsList, events, isPlayerOne): #To move the boats
             if isPlayerOne == True:
                 for boat in boatsList:
@@ -275,10 +312,11 @@ class Boat(ImageLoad):
                 cannon = Boat(boat.positionX, boat.positionY + 18, "Remastered\Images\Fight\Attack\Cannon\cannon.png",
                               None)
                 return cannon
+
     def GetAttacked(self, cannon, isPlayerOne): #Changes position of the cannon sprite
-        if isPlayerOne == True:
+        if isPlayerOne is True and cannon is not None:
             cannon.positionX += 5
-        else:
+        elif isPlayerOne is False and cannon is not None:
             cannon.positionX -= 5
     def Rect(self, screenBox, colour, cannonList, boatList): #for collision detection
         for boat in boatList: #Draws the rects for the boats in the list
