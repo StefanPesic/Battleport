@@ -118,7 +118,7 @@ class Display:
     def Update(self):
         pygame.display.update()
     def ChangeResolution(self):
-        #TODO 
+        #TODO
         currentResultion = ScreenResolutionEnum.GiveResolution()
         self.fullScreen = pygame.display.set_mode((1300, 600), pygame.FULLSCREEN)
 
