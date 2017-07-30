@@ -1,8 +1,12 @@
 # Game-Battleport-
-Game made for an Informatica school project in period 2 of school year 1
+School project
 
-This game is made by 4 students. It is a game that features battleships and the main goal is to defeat the boats of the other player.
+A game made for a school project in Periode 2 of school year 1 (January 2017). The goal of the game is to have players battle each other with battleships. 
 
-The game is playable but not complete, but it will be remastered.
+It is a pygame based application. The following features are in it:
+ - Shoot cannons
 
-Feel free to run it with the file: "TheMenu_remastered.py"
+The game is in progress.
+
+TODO:
+ - Scalable
