@@ -6,10 +6,7 @@
     <annotation-enable>false</annotation-enable>
     <other-services-enabled>false</other-services-enabled>
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6.0 (C:\Program Files (x86)\Python36-32\python.exe)" project-jdk-type="Python SDK" />
-  <component name="SvnConfiguration">
-    <configuration>C:\Users\sppes\AppData\Roaming\Subversion</configuration>
-  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6 (untitled)" project-jdk-type="Python SDK" />
   <component name="masterDetails">
     <states>
       <state key="ScopeChooserConfigurable.UI">

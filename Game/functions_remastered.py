@@ -35,80 +35,6 @@ red = Colour(255,0,0)
 yellow = Colour(255,255,0)
 blue = Colour(0,0,255)
 
-#For playing music
-class Music:
-    def __init__(self, volume, audioFile, typePlay):
-        self.audiofile = pygame.mixer.music.load(audioFile)
-        self.typePlay = typePlay
-        self.audioLocation = audioFile
-        self.volume = volume
-        pygame.mixer.music.set_volume(volume)
-
-    def playSound(self):
-        return pygame.mixer.music.play(self.typePlay)
-    def ChangeVolume(self, mouseEvent):
-        leftMouse = 1
-        volumeChangeLevel = 0.1     
-        if mouseEvent.button == leftMouse:
-            self.volume += volumeChangeLevel
-        else:
-            self.volume -= volumeChangeLevel
-        pygame.mixer.music.set_volume(self.volume)
-
-menuTheme = Music(1.0, "Remastered\Sound\Menu\menu_theme.wav", 0)
-menuTheme.playSound()
-
-
-#Used for the count clock of the scoreboard
-class Clock:
-    def __init__(self, fps):
-        self.fps = fps
-        self.seconds = 0
-        self.minutes = 0
-        self.changingNumber = 0
-    def StartClock(self):
-        clock = pygame.time.Clock()
-        clock.tick(self.fps)
-    def Tick(self):
-        self.seconds = round(int(self.changingNumber), 0)
-        if self.changingNumber > 60:
-            self.minutes += 1
-            self.changingNumber = 0
-        else:
-            self.changingNumber += 0.01
-#The mouse (Hardware device)
-class Mouse:
-    def __init__(self):
-        self.mouseX = None
-        self.mouseY = None
-        self.click = pygame.mouse.get_pressed()
-    def mouseMotion(self):
-        (self.mouseX, self.mouseY) = pygame.mouse.get_pos()
-
-#For the screen resolutions
-class ScreenResolutionEnum:
-    def __init__(self):
-        resolutionOne = [1920, 1680]
-        resolutionTwo = [1366, 768]
-        resolutionThree = [1280, 1024]
-        resolutionFour = [1280, 800]
-        resolutionFive = [1024, 768]
-        self.resolutions = []
-        self.resolutions.append(resolutionOne)
-        self.resolutions.append(resolutionTwo)
-        self.resolutions.append(resolutionThree)
-        self.resolutions.append(resolutionFour)
-        self.resolutions.append(resolutionFive)
-    def GiveResolution(self):
-        index = -1
-        if index >= len(self.resolutions) - 1:
-            index = -1
-        else:
-            index += 1
-            return self.resolutions[index]
-
-ScreenResolutionEnum = ScreenResolutionEnum()
-
 #Main Display screen
 class Display:
     def __init__(self, captiontitle):
@@ -123,42 +49,6 @@ class Display:
         self.fullScreen = pygame.display.set_mode((1300, 600), pygame.FULLSCREEN)
 
 display = Display("Fullscreen")
-
-#To set position options
-class FontAllignmentEnum:
-    Top, Down = range(0,2)
-    @staticmethod
-    def GetTop():
-        return FontAllignmentEnum.Top
-    @staticmethod
-    def GetDown():
-        return FontAllignmentEnum.Down
-
-
-#For the images
-class ImageLoad(Display):
-    def __init__(self, imageFile):
-        Display.__init__(self,"Image")
-        self.imageFile = imageFile
-        self.imageLoading = pygame.image.load(self.imageFile).convert_alpha()
-        self.fullImage = pygame.transform.scale(self.imageLoading,(self.screenDetect.current_w, self.screenDetect.current_h))
-        self.posX = None
-        self.posY = None
-    def FullScreenBlit(self, screenBox):
-        return screenBox.fullScreen.blit(self.fullImage, (0, 0)) #Fills entire screen
-    def NormalBlit(self, posX, posY, width, height): #for specific images (sprites)
-        self.posX = posX
-        self.posY = posY
-        if width == None and height == None: #It is optional to give width and height
-            return self.fullScreen.blit(self.imageLoading, (self.posX,self.posY))
-        else:
-            scaledImageSize = pygame.transform.scale(self.imageLoading, (width, height)) #changes size of image
-            return self.fullScreen.blit(scaledImageSize, (posX,posY, 1600, 900))
-    def setPositions(self, posX, posY): #Sets new position for the image
-        self.posX = posX
-        self.posY = posY
-
-
 
 #TODO scale font
 #For the fonts
@@ -225,6 +115,152 @@ class Font:
                 gameState.current = gameState.menu
             else:
                 pass
+
+class VolumeFigure(Display,Font):
+    def __init__(self):
+        self.volumeMeter = self.DrawVolumeMeter(10)
+        Display.__init__(self, "")
+        Font.__init__(self,None, 100, self.volumeMeter, white, "name")
+    def UpdateVolumFigure(self, needsToBeturnedUp):
+        if(needsToBeturnedUp):
+            self.volumeMeter += "|"
+        else:
+            volumeMeterLength = len(self.volumeMeter)
+            self.volumeMeter = self.volumeMeter[:volumeMeterLength - 1]
+    def DrawVolumeMeter(self, ammountOfVolumeMeters):
+        volumeMeter = ""
+        for i in range(0,ammountOfVolumeMeters):
+            volumeMeter += "|"
+        return volumeMeter
+    def Blit(self):
+        self.Update()
+        self.reloadText(self.volumeMeter)
+        self.fullScreen.blit(self.fontRender,(350,300))
+
+
+
+volumeFigure = VolumeFigure()
+
+
+#For playing music
+class Music:
+    def __init__(self, volume, audioFile, typePlay):
+        self.audiofile = pygame.mixer.music.load(audioFile)
+        self.typePlay = typePlay
+        self.audioLocation = audioFile
+        self.volume = volume
+        pygame.mixer.music.set_volume(volume)
+    def playSound(self):
+        return pygame.mixer.music.play(self.typePlay)
+    def ChangeVolume(self, mouseEvent):
+        leftMouse = 1
+        rightMouse = 3
+        volumeChangeLevel = 0.2
+        if mouseEvent.button == leftMouse:
+            self.volume += volumeChangeLevel
+            volumeFigure.UpdateVolumFigure(True)
+
+        elif mouseEvent.button == rightMouse:
+            self.volume -= volumeChangeLevel
+            volumeFigure.UpdateVolumFigure(False)
+        print(volumeFigure.volumeMeter)
+        pygame.mixer.music.set_volume(self.volume)
+
+
+menuTheme = Music(1.0, "Remastered\Sound\Menu\menu_theme.wav", 0)
+menuTheme.playSound()
+
+
+
+#Used for the count clock of the scoreboard
+class Clock:
+    def __init__(self, fps):
+        self.fps = fps
+        self.seconds = 0
+        self.minutes = 0
+        self.changingNumber = 0
+    def StartClock(self):
+        clock = pygame.time.Clock()
+        clock.tick(self.fps)
+    def Tick(self):
+        self.seconds = round(int(self.changingNumber), 0)
+        if self.changingNumber > 60:
+            self.minutes += 1
+            self.changingNumber = 0
+        else:
+            self.changingNumber += 0.01
+#The mouse (Hardware device)
+class Mouse:
+    def __init__(self):
+        self.mouseX = None
+        self.mouseY = None
+        self.click = pygame.mouse.get_pressed()
+    def mouseMotion(self):
+        (self.mouseX, self.mouseY) = pygame.mouse.get_pos()
+
+#For the screen resolutions
+class ScreenResolutionEnum:
+    def __init__(self):
+        resolutionOne = [1920, 1680]
+        resolutionTwo = [1366, 768]
+        resolutionThree = [1280, 1024]
+        resolutionFour = [1280, 800]
+        resolutionFive = [1024, 768]
+        self.resolutions = []
+        self.resolutions.append(resolutionOne)
+        self.resolutions.append(resolutionTwo)
+        self.resolutions.append(resolutionThree)
+        self.resolutions.append(resolutionFour)
+        self.resolutions.append(resolutionFive)
+    def GiveResolution(self):
+        index = -1
+        if index >= len(self.resolutions) - 1:
+            index = -1
+        else:
+            index += 1
+            return self.resolutions[index]
+
+ScreenResolutionEnum = ScreenResolutionEnum()
+
+
+
+#To set position options
+class FontAllignmentEnum:
+    Top, Down = range(0,2)
+    @staticmethod
+    def GetTop():
+        return FontAllignmentEnum.Top
+    @staticmethod
+    def GetDown():
+        return FontAllignmentEnum.Down
+
+
+#For the images
+class ImageLoad(Display):
+    def __init__(self, imageFile):
+        Display.__init__(self,"Image")
+        self.imageFile = imageFile
+        self.imageLoading = pygame.image.load(self.imageFile).convert_alpha()
+        self.fullImage = pygame.transform.scale(self.imageLoading,(self.screenDetect.current_w, self.screenDetect.current_h))
+        self.posX = None
+        self.posY = None
+    def FullScreenBlit(self, screenBox):
+        return screenBox.fullScreen.blit(self.fullImage, (0, 0)) #Fills entire screen
+    def NormalBlit(self, posX, posY, width, height): #for specific images (sprites)
+        self.posX = posX
+        self.posY = posY
+        if width == None and height == None: #It is optional to give width and height
+            return self.fullScreen.blit(self.imageLoading, (self.posX,self.posY))
+        else:
+            scaledImageSize = pygame.transform.scale(self.imageLoading, (width, height)) #changes size of image
+            return self.fullScreen.blit(scaledImageSize, (posX,posY, 1600, 900))
+    def setPositions(self, posX, posY): #Sets new position for the image
+        self.posX = posX
+        self.posY = posY
+
+
+
+
 
 #For the highscores
 class DataBase:

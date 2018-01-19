@@ -327,9 +327,12 @@ class Settings(AbstractMenuPage):
                         pygame.quit()
                         sys.exit()
                 (MouseX, MouseY) = pygame.mouse.get_pos()
+
+                volumeFigure.Blit()
                 self.fontVolume.Rect(display, black, MouseX, MouseY, events)
                 self.fontResolution.Rect(display, black, MouseX, MouseY, events)
                 self.fontBack.Rect(display, black, MouseX, MouseY, events)
+
             display.Update()
         GameStateLoop.MainGameLoop()
 
@@ -376,6 +379,7 @@ class Menu(AbstractMenuPage):
                         pygame.quit()
                         sys.exit()
                 (MouseX, MouseY) = pygame.mouse.get_pos()
+
                 self.fontFight.Rect(display, red, MouseX, MouseY, events)
                 self.fontRules.Rect(display, red, MouseX, MouseY, events)
                 self.fontScores.Rect(display, red, MouseX, MouseY, events)
