@@ -1,12 +1,12 @@
 # Game-Battleport-
-School project
 
-A game made for a school project in Periode 2 of school year 1 (January 2017). The goal of the game is to have players battle each other with battleships. 
+A game made for a team school project done in Periode 2 of school year 1. The goal of the game was to have players battle each other with battleships. After the school project was over, i decided to work further on the game.
 
-It is a pygame based application. The following features are in it:
+The following features are in it:
  - Shoot cannons
+ - Move boats
+ - Get points when a ship is down
 
-The game is in progress.
 
-TODO:
- - Scalable
+# Frameworks
+pygame
