@@ -7,6 +7,8 @@ The following features are in it:
  - Move boats
  - Get points when a ship is down
 
+![Screenshot](https://github.com/StefanPesic/Battleport/blob/master/BattlePort.png)
 
 # Library
 pygame
+
