@@ -8,5 +8,5 @@ The following features are in it:
  - Get points when a ship is down
 
 
-# Frameworks
+# Library
 pygame
