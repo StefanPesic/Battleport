@@ -5,7 +5,8 @@ A game made for a team school project done in Periode 2 of school year 1. The go
 The following features are in it:
  - Shoot cannons
  - Move boats
- - Get points when a ship is down
+ - Points increase when a ship is down
+ - Sprites
 
 ![Screenshot](https://github.com/StefanPesic/Battleport/blob/master/BattlePort.png)
 
