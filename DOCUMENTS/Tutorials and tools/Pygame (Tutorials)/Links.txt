@@ -1,0 +1,36 @@
+Basic tutorials (no chapters)
+https://www.cs.ucsb.edu/~pconrad/cs5nm/topics/pygame/drawing/
+http://vrbilgi.blogspot.nl/p/pygame-turorial-beta-20.html
+http://www.nerdparadise.com/programming/pygame/part1
+http://qq.readthedocs.io/en/latest/
+http://codentronix.com/2011/04/20/a-fast-introduction-to-pygame/
+https://realpython.com/blog/python/pygame-a-primer/
+http://inventwithpython.com/chapter18.html
+http://inventwithpython.com/chapter19.html
+http://inventwithpython.com/chapter20.html
+http://www.pandadeath.com/basic-setup.html
+http://www.pandadeath.com/movement-basics.html
+
+Wide tutorials (with chapters)
+http://python-gaming.com/pygame/docs/color.html
+http://thepythongamebook.com/en:pygame:start
+http://myweb.tiscali.co.uk/molle/tutorials/pygame101.html
+http://www.petercollingridge.co.uk/pygame-physics-simulation/creating-pygame-window
+http://inventwithpython.com/chapter17.html
+
+Cheat sheets(references):
+http://coderdojodl.com/wp-content/uploads/2014/11/PyGame-Hello-World.pdf
+https://liamdjolly.com/2015/03/28/pyinvaders-and-a-pygame-cheat-sheet/
+http://web.cse.unsw.edu.au/~z5017329/cc/guides/cheatsheet/
+https://github.com/ehmatthes/pcc/releases/download/v1.0.0/beginners_python_cheat_sheet_pcc_pygame.pdf
+http://inventwithpython.com/pygamecheatsheet.png
+http://www.cogsci.rpi.edu/~destem/gamedev/pygame.pdf
+
+Books:
+http://slav0nic.org.ua/static/books/python/beginning-game-development-with-python-and-pygame-from-novice-to-professional.9781590598726.29808.pdf
+http://www.leevonk.com/information/Game%20Programming/Making%20Games%20with%20Python%20and%20Pygame.pdf
+
+Lecture:
+http://studylib.net/doc/5703970/lecture-slides--powerpoint-
+http://ru4cs.cs.rutgers.edu/PygamePres2014.pdf
+ttp://dip.sun.ac.za/~neil/talks/ctpug/ctpug_4/CTPUG_4_PyGame_Talk.pdf

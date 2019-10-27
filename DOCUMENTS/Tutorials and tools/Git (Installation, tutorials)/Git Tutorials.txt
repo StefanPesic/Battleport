@@ -1,0 +1,5 @@
+- Configure username and email
+https://www.youtube.com/watch?v=yDntCIs-IJM
+
+-Git tutorial
+http://matthew-brett.github.io/pydagogue/git_gui_windows.html
